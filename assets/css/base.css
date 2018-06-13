@@ -90,3 +90,20 @@ html, body {
 a, a:hover {
   color:#333;
 }
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s;
+}
+
+.page-enter, .page-leave-active {
+  opacity: 0;
+}
+
+.el-breadcrumb {
+  margin-bottom: 15px;
+}
+
+.el-pagination {
+  margin-top: 10px;
+  text-align: center;
+}
