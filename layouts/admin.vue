@@ -1,10 +1,8 @@
 <template>
   <el-container>
     <!--侧边栏-->
-    <el-aside width="20%">
-      <l-admin-sidebar></l-admin-sidebar>
-    </el-aside>
-     
+    <!--  <l-admin-sidebar></l-admin-sidebar> -->
+     <l-admin-sidebar></l-admin-sidebar>
     <el-container>
       <!--顶部栏-->
       <el-header style="background-color: #fff;text-align: right;">

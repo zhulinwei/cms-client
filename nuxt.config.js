@@ -22,10 +22,12 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
+    'element-ui/lib/theme-chalk/display.css',
     '~/assets/css/base.css'
   ],
   plugins: [
-    '@/plugins/element-ui'
+    { src: '@/plugins/element-ui' },
+    { src: '@/plugins/editor', ssr: false },
   ],
   build: {
     /*

@@ -1,102 +1,109 @@
 <template>
-    <div class="l-admin-sidebar">
-      <div class="l-admin-sidebar-header">
-        <img src="~/static/images/default_admin.jpeg">
-        <p class="title">Level.Z CMS</p>
-        <p class="content">内容管理系统 </p>
-      </div>
-      <el-menu class="l-admin-sidebar-body" default-active="1" :unique-opened="false"  @open="handleOpen" @close="handleClose">
-        <el-menu-item index="1">
-          <nuxt-link to="/admin/blog/catalogs">
-            <i class="fa fa-desktop" aria-hidden="true"></i>
-            <span slot="title">控制面板</span>
+  <el-row id="l-admin-sidebar" class="hidden-xs-only">
+    <div class="l-admin-sidebar-header">
+      <img :src="admin.image">
+      <p class="title">{{ admin.name }} CMS</p>
+      <p class="content">内容管理系统 </p>
+    </div>
+    <el-menu class="l-admin-sidebar-body" :unique-opened="true" @open="handleOpen" @close="handleClose">
+      <div v-for="(menu, menuIndex) of menus" :key="menu.name">
+        <!-- 一级菜单  -->
+        <el-menu-item v-if="!menu.subMenus || menu.subMenus.length <1" :index="getMenuIndex(menuIndex)">
+          <nuxt-link :to= "menu.url">
+            <i class="fa" :class="menu.icon" aria-hidden="true"></i>
+            <span slot="title">{{ menu.name }}</span>
           </nuxt-link>
         </el-menu-item>
-
-        <el-submenu index="2">
+        <!-- 二级菜单 -->
+        <el-submenu v-else :index="getMenuIndex(menuIndex)">
           <template slot="title">
-            <i class="fa fa-book" aria-hidden="true"></i>
-            <span>博客管理</span>
+            <i class="fa" :class="menu.icon" aria-hidden="true"></i>
+            <span>{{ menu.name }}</span>
           </template>
-          <el-menu-item index="2-1">
-            <nuxt-link to="/admin/blog/catalogs">
-              <i class="fa fa-folder-open" aria-hidden="true"></i>
-              <span slot="title">目录列表</span>
-            </nuxt-link>
-          </el-menu-item>
-          <el-menu-item index="2-2">
-            <nuxt-link to="/admin/blog/acticles">
-              <i class="fa fa-file" aria-hidden="true"></i>
-              <span slot="title">文章列表</span>
-            </nuxt-link>
-          </el-menu-item>
-          <el-menu-item index="2-3">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            <span slot="title">发布文章</span>
-          </el-menu-item>
-          <el-menu-item index="2-4">
-            <nuxt-link to="/admin/blog/comments">
-              <i class="fa fa-comments" aria-hidden="true"></i>
-              <span slot="title">评论管理</span>
-            </nuxt-link>
-          </el-menu-item>
+          <div v-for="(subMenu, subMenuIndex) of menu.subMenus" :key="subMenuIndex">
+            <el-menu-item :index="getMenuIndex(menuIndex, subMenuIndex)">
+              <nuxt-link :to= "subMenu.url">
+                <i class="fa" :class="subMenu.icon" aria-hidden="true"></i>
+                <span slot="title">{{ subMenu.name }}</span>
+              </nuxt-link>
+            </el-menu-item>
+          </div>
         </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">
-            <i class="fa fa-weixin" aria-hidden="true"></i>
-            <span>微信管理</span>
-          </template>
-          <el-menu-item index="3-1">
-            <span slot="title">目录管理</span>
-          </el-menu-item>
-          <el-menu-item index="3-2">
-            <span slot="title">文章管理</span>
-          </el-menu-item>
-          <el-menu-item index="3-3">
-            <span slot="title">发布文章</span>
-          </el-menu-item>
-          <el-menu-item index="3-4">
-            <span slot="title">评论管理</span>
-          </el-menu-item>
-          <el-menu-item index="3-5">
-            <span slot="title">账号管理</span>
-          </el-menu-item>
-        </el-submenu>
-
-        <el-menu-item index="4">
-          <i class="fa fa-cog" aria-hidden="true"></i>
-          <span slot="title">账号设置</span>
-        </el-menu-item>
-
-        <el-submenu index="5">
-          <template slot="title">
-            <i class="fa fa-cogs" aria-hidden="true"></i>
-            <span>系统设置</span>
-          </template>
-          <el-menu-item index="5-1">
-            <span slot="title">目录管理</span>
-          </el-menu-item>
-          <el-menu-item index="5-2">
-            <span slot="title">文章管理</span>
-          </el-menu-item>
-          <el-menu-item index="5-3">
-            <span slot="title">发布文章</span>
-          </el-menu-item>
-          <el-menu-item index="5-4">
-            <span slot="title">评论管理</span>
-          </el-menu-item>
-          <el-menu-item index="5-5">
-            <span slot="title">账号管理</span>
-          </el-menu-item>
-        </el-submenu>
-      </el-menu>
-    </div>
+      </div>
+    </el-menu>
+  </el-row>
 </template>
 <script>
   export default {
     data() {
+      const admin = {
+        "name": "Level.Z",
+        "image": "http://pahz6ot8c.bkt.clouddn.com/5b271e361f065f167e8fef8c"
+      };
+      const menus = [
+        {
+          "name": "控制面板",
+          "url": "/admin/dashboard",
+          "icon": "fa-desktop"
+        },
+        {
+          "name": "博客管理",
+          "icon": "fa-book",
+          "subMenus": [
+            {
+              "name": "目录列表",
+              "url": "/admin/blog/catalogs",
+              "icon": "fa-folder-open" 
+            },
+            {
+              "name": "文章列表",
+              "url": "/admin/blog/acticles",
+              "icon": "fa-file",  
+            },
+            {
+              "name": "发布文章",
+              "url": "/admin/blog/editors",
+              "icon": "fa-pencil-square-o",  
+            },
+            {
+              "name": "评论管理",
+              "url": "/admin/blog/comments",
+              "icon": "fa-comments"  
+            },
+          ] 
+        },
+        {
+          "name": "微信管理",
+          "icon": "fa-weixin",
+          "subMenus": [
+            {
+              "name": "目录列表",
+              "url": "/admin/blog/catalogs",
+              "icon": "fa-folder-open" 
+            },
+          ] 
+        },
+        {
+          "name": "账号设置",
+          "url": "/admin/accounts",
+          "icon": "fa-cog"
+        },
+        {
+          "name": "系统设置",
+          "url": "",
+          "icon": "fa-cogs",
+           "subMenus": [
+            {
+              "name": "权限设置",
+              "url": "/admin/settings",
+              "icon": "fa-id-card" 
+            },
+          ] 
+        }
+      ];
       return {
-        // 保持只有一个子菜单展开
+        admin,
+        menus,  
       }
     },
     methods: {
@@ -105,22 +112,31 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      getMenuIndex(menuIndex, subMenuIndex) {
+        if (!subMenuIndex) return `${menuIndex}`;
+        return `${menuIndex}-${subMenuIndex}`;
       }
     }
   }
 </script>
 
 <style>
-  .l-admin-sidebar {
-    position: fixed;
-    width: 20%;
+  #l-admin-sidebar {
+    /* position: fixed; */
+    /* width: 20%; */
     min-width: 200px;
     /** height+position能让侧边栏的高度撑满这个屏幕 **/
-    height: 100%;
+    /* height: 100%; */
+    min-height: 1000px;
     color: #fff;
     background-color: #4C3B2F;
     border-right: 0;
     z-index: 100;    
+  }
+
+  #l-admin-side.hidden-xs-only-row {
+    width: 0px;  
   }
 
   .l-admin-sidebar-header {

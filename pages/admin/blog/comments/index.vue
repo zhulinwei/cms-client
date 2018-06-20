@@ -1,6 +1,6 @@
 
 <template>
-  <el-row> 
+  <el-row id="l-admin-blog-comments"> 
     <el-col>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>博客管理</el-breadcrumb-item>

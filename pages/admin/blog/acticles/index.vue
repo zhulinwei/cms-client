@@ -1,5 +1,5 @@
 <template>
-  <el-row>
+  <el-row id="l-admin-blog-acticle">
     <el-col>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>博客管理</el-breadcrumb-item>
