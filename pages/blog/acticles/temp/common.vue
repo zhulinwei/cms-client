@@ -1,5 +1,5 @@
 <template>
-  <div class="l-acticle-common-wrapper" :acticle="acticles">
+  <div class="l-acticle-common-wrapper">
     <l-title :title="title"></l-title>
     <div class="l-acticle-common">
       <ul v-if="acticles.length">
@@ -14,17 +14,18 @@
               <div class="l-acticle-common-explain">
                 <a href="http://www.baidu.com">Level.Z</a>
                 <span class="l-acticle-common-dot">.</span>
-                <span><a href="">{{ acticle.comments }}条评论</a></span>
+                <span><a href="">{{ acticle.commentsCount }}条评论</a></span>
                 <span class="l-acticle-common-dot">.</span>
-                <span>{{ acticle.createTime }}</span>
-                <span>{{ acticle.reading }}次阅读</span>              
+                <span>{{ acticle.readCount }}次阅读</span>              
+                <!--<span>{{ acticle.createTime }}</span>-->
               </div>
             </div>
           </router-link>
         </li>
       </ul>
       <p v-else>暂无{{ title }}</p>
-      <p class="l-loading-more">加载中...</p>
+      <p class="l-loading-more" v-if="residue > 0"><a @click="nextList" src="javascript:;">点击加载更多~</a></p>
+      <p class="l-loading-more" v-else>已经到底线啦~</p>
     </div>
   </div>
 </template>
@@ -32,15 +33,17 @@
 <script>
   import title from "./title.vue"
   export default {
-    props: [ 'acticles' ],
+    props: [ 'acticles', 'residue' ],
     data() {
       let title = "最新文章";
-      let acticle = {};
-      return { title, acticle };
+      return { title };
     },
     methods: {
       detail(acticle) {
         // this.acticle = acticle;
+      },
+      nextList() {
+        this.$emit('nextList');  
       }
     },
     components: {
@@ -50,6 +53,9 @@
 </script>
 
 <style>
+  .l-acticle-common-wrapper {
+    flex: 1;  
+  }
   .l-acticle-common {
     overflow: hidden;
   }
@@ -123,7 +129,6 @@
       vertical-align: top;
       display: inline-block;
     }
-    
   }
 </style>
 

@@ -18,10 +18,10 @@
           <div class="l-acticle-special-explain">
             <a href="">Level.Z</a>
             <span class="l-acticle-special-dot">.</span>
-            <span><a href="">{{ acticle.comments }}条评论</a></span>
+            <span><a href="">{{ acticle.commentsCount }}条评论</a></span>
             <span class="l-acticle-special-dot">.</span>
-            <span>{{ acticle.createTime }}</span>
-            <span>{{ acticle.reading }}次阅读</span>              
+            <!--<span>{{ acticle.createTime }}</span>-->
+            <span>{{ acticle.readCount }}次阅读</span>              
           </div>
         </li>
       </ul>

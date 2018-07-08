@@ -29,6 +29,14 @@ module.exports = {
     { src: '@/plugins/element-ui' },
     { src: '@/plugins/editor', ssr: false },
   ],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
+  ],
+  proxy: {
+    // '/api/': { target: 'http://localhost:3451', pathRewrite: { '^/api/': '' } },
+    '/api/': { target: 'http://localhost:3451' },
+  },
   build: {
     /*
     ** Run ESLint on save

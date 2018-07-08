@@ -1,13 +1,13 @@
 <template>
   <div>
-      <div class="l-blog-wrapper">
+    <div class="l-blog-wrapper" v-loading="loading">
       <div class="l-blog">
         <div class="l-specical">
           <l-acticle-special :acticles="specialActicles"></l-acticle-special>
         </div>
         <div class="l-common" >
-          <l-acticle-common :acticles="commonActicles"></l-acticle-common>
-          <l-menu @change="catalog" :menus="menus"></l-menu>
+          <l-acticle-common @nextList="nextList" :acticles="commonActicles" :residue="residue"></l-acticle-common>
+          <l-menu @changeCatalog="changeCatalog" :catalogs="catalogs"></l-menu>
         </div>
       </div>
     </div>
@@ -18,81 +18,67 @@
   import menu from './temp/menu.vue'
   import common from "./temp/common.vue"
   import special from "./temp/special.vue"
+  
+  import _ from 'lodash';
+  import axios from 'axios';
   export default {
     layout: 'blog',
     data() {
-      this.menus = [];
-      let specialActicles = [];
+      let catalogs = [];
+      let loading = false;
       let commonActicles = [];
-      return { specialActicles, commonActicles };
+      let specialActicles = [];
+      let residue = 1;
+      let currentCatalog = '';
+      const fields = { title: 1, catalogId: 1, thumbnail: 1, outline: 1, commentsCount: 1, readCount: 1 };
+      return { catalogs, specialActicles, commonActicles, loading, residue, currentCatalog, fields };
     },
     created() {
       this.query();
     },
     methods: {
       async query() {
-        this.menus = [
-          { name: "html", value: "HTML" },
-          { name: "css", value: "CSS" },
-          { name: "JavaScript", value: "JavaScript" },
-        ];
-        this.specialActicles = [
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数1",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          }
-        ];
-        this.commonActicles = [
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数2",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          },
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数2",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          }
-        ];
+        const catalogs = await this.$axios.get('/api/blog/catalogs');
+        this.catalogs = catalogs.data.list.map(catalog => {
+          return { id: catalog._id, name: catalog.name }
+        });
+        
+        const specialSelector = { isTop: true };
+        const commonSelector = { isTop: false };
+        const options = { 
+          limit: 20,
+          sort: { _id: -1 },
+          fields: this.fields
+        };
+        const specialActicles = await this.$axios.post('/api/blog/acticles/query', { selector: specialSelector, options });
+        const commonActicles = await this.$axios.post('/api/blog/acticles/query', { selector: commonSelector, options });
+        this.specialActicles = specialActicles.data.list;
+        this.commonActicles = commonActicles.data.list;
+        this.residue = commonActicles.data.residue;
       },
-      catalog() {
-        this.commonActicles = [
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数2",
-            // "thumbnail":"1513493142038.jpg",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          }
-        ];
+      async changeCatalog(catalog) {
+        this.loading = true;
+        const selector = {
+          catalogId: catalog.id,
+          isTop: false  
+        };
+        const options = { 
+          limit: 20,
+          sort: { _id: -1},
+          fields: this.fields
+        };
+        const commonActicles = await this.$axios.post('/api/blog/acticles/query', { selector, options });
+        this.commonActicles = commonActicles.data.list;
+        this.residue = commonActicles.data.residue;
+        this.currentCatalog = catalog.id;
+        this.loading = false;
+      },
+      async nextList() {
+        const lastActicleId = this.commonActicles[this.commonActicles.length -1]._id;
+        const selector = { catalogId: this.currentCatalog, acticleId: lastActicleId, isTop: false };
+        const acticles = await this.$axios.post('/api/blog/acticles/next/query', selector);
+        this.commonActicles = this.commonActicles.concat(acticles.data.list)
+        this.residue = acticles.data.residue; 
       }
     },
     components: {
@@ -113,6 +99,7 @@
   .l-common {
     width: 100%;
     display: flex;
+    flex-flow: row;
   }
 </style>
 

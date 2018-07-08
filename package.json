@@ -13,12 +13,15 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.3.9",
     "nuxt": "^1.0.0",
     "vue": "^2.5.16",
     "wangeditor": "^3.1.1"
   },
   "devDependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/proxy": "^1.2.4",
     "babel-eslint": "^8.2.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",

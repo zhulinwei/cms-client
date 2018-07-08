@@ -2,8 +2,8 @@
   <div class="l-menu-wrapper">
     <ul class="l-menu l-menu-hidden">
       <li class="l-menu-title">文章类别</li>
-      <li class="l-menu-item" v-for="menu in menus" :key="menu.id" @click="change(menu)">
-        <a href="javascript:;">{{ menu.value }}</a>
+      <li class="l-menu-item" v-for="catalog in catalogs" :key="catalog._id" @click="changeCatalog(catalog)">
+        <a href="javascript:;">{{ catalog.name }}</a>
       </li>
     </ul>
   </div>
@@ -11,10 +11,10 @@
 
 <script>
   export default {
-    props: [ "menus" ],
+    props: [ "catalogs" ],
     methods: {
-      change(menu) {
-        this.$emit('change', 'css');
+      changeCatalog(catalog) {
+        this.$emit('changeCatalog', catalog);
       }
     },
   }
@@ -22,9 +22,9 @@
 
 <style>
   .l-menu {
+    width: 150px;
     padding: 30px;
-    margin-top: 30px;
-    margin: 30px 10px;
+    margin: 42px 10px;
     background-color: #fff;
     box-shadow: 0 0 3px 0 #666;
   } 
