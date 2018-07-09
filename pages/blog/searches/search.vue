@@ -21,8 +21,7 @@
     layout: 'blog',
     props: [ 'acticles' ],
     data() {
-      let acticle = {};
-      return { acticle };
+      return { };
     },
     methods: {
       detail(acticle) {

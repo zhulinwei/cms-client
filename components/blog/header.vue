@@ -3,7 +3,7 @@
   <div id="l-header-wrapper">
     <div class="l-header">
       <div class="l-header-img">
-        <img class="logo" src="http://pahz6ot8c.bkt.clouddn.com/5b275ad2ae4dfd19be4761a9" alt="logo">
+        <img class="logo" src="~static/images/blog_logo.png" alt="logo">
       </div>
       <div class="l-header-tab">
         <div class="l-header-tab-item">

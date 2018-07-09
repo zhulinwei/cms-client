@@ -4,33 +4,36 @@
     <div class="l-comment-wrapper">
       <div class="l-comment" v-for="(item, index) in comments" :key="index">
         <div class="l-comment-img">
-          <img :src="item.thumbnail" alt="">
+          <img :src="item.avatar" alt="">
         </div>
         <div class="l-comment-item">
-          <p>
-            <strong>asdf</strong>
-            <span class="l-comment-speak">回复</span>
-            <strong>asdf</strong>
-          </p>
+          <div>
+            <strong>{{ item.nickname }}</strong>
+            <span v-if="item.to">
+              <span v-show="item.to && item.to.uid" class="l-comment-speak">回复</span>
+              <strong v-show="item.to && item.to.uid">{{ item.to.nickname }}</strong>
+            </span>
+            <span v-else></span>
+          </div>
           <p>{{ item.content }}</p>
           <p>
-            <span>{{ item.meta.updateAt }}</span>
-            <button class="l-comment-reply" @click="reply(item._id)">回复</button>
+            <span>{{ item.createTime }}</span>
+            <button class="l-comment-reply" @click="reply(item)">回复</button>
           </p>
         </div>
       </div>
       <div class="l-comment">
         <div class="l-comment-img">
-          <img :src="user.thumbnail" alt="">
+          <img v-if="user.avatar" :src="user.avatar" alt="">
+          <img v-else src="~static/images/tourist_avatar.png" />
         </div>
         <div class="l-comment-item">
           <div class="l-comment-editor">
-            <p><span>我要评论</span><span style="float: right"><a href="javascript:;">登录</a></span></p>
-            <textarea type="text" placeholder="写下你的回复" class="comment-input" /> 
-            <!-- <input type="text" placeholder="写下你的回复" class="comment-input" /> -->
+            <p><span>我要评论</span><span class="l-login"><a href="javascript:;">登录</a></span></p>
+            <textarea v-model="form.content" type="text" placeholder="写下你的回复" class="comment-input" ref="comment-input"/> 
           </div>
           <div class="l-comment-footer">
-            <button class="l-comment-button">发表评论</button>
+            <button class="l-comment-button" @click="submit">发表评论</button>
           </div>
         </div>
       </div>  
@@ -40,184 +43,45 @@
 
 <script>
   import title from "./title.vue"
+
+  import axios from 'axios'
   export default {
+    props: [ 'user', 'comments'], 
     data() {
-      let user = {}
-      let count = 21;
-      let comments = [];
-      const title = "最新评论";
-      return { count, comments, title };
-    },
-    created() {
-      this.query();
+      console.log(this.user)
+      const acticleId = this.$route.params.id; 
+      const title = '最近评论';
+      let form = {
+        uid: this.user.uid,
+        avatar: this.user.avatar,
+        nickname: this.user.nickname,
+        content: '',
+        to: {}
+      };
+      return { title, acticleId, form };
     },
     methods: {
-      query() {
-        this.user = {
-          openId: '',
-          nickname: '小粥',
-          thumbnail: 'https://www.51linwei.top/img/da8e974dc_l.jpg',
+      reply(comment) {
+        this.form.to = {
+          uid: comment.uid,
+          avatar: comment.avatar,
+          nickname: comment.nickname  
         };
-        this.comments = [
-          {
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "阿斯顿发送到发送地方撒地方撒点发送到发送到发送到发送地方反复反反复复反反复复反反复复反反复复反反复复定时发送到发送发送地方那可是你能给你那个不是大概是个哈是吧姑娘故噶世界观阿斯顿噶世界观啊说过话萨嘎啊时光萨嘎萨嘎萨热奥那个软件 干啊事故肉肉谷歌干",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },{
-            "_id":"5960595e5738b97164dce28d",
-            "superior":"593ff8ad371eea0a632449c8",
-            "thumbnail": 'http://q.qlogo.cn/qqapp/101405670/BDF84C562DADD0554C92E6B1CEF3565B/40',
-            "from": {
-              "_id": "784C56B4B1E7E424C9CDF9CE829C3A99",
-              "nickName":"蓝  洛",
-              "thumbnail":"http://q.qlogo.cn/qqapp/101405670/784C56B4B1E7E424C9CDF9CE829C3A99/40",
-            },
-            "content": "asdfsadf",
-            "meta":{
-              "updateAt": "7月前",
-              "createAt": "7月前",
-            }
-          },
-        ]
+        this.$refs['comment-input'].focus();
       },
-      reply(id) {
-        document.getElementsByTagName('input')[0].focus();
+      async submit() {
+        this.form.uid = this.user.uid;
+        this.form.avatar = this.user.avatar;
+        this.form.nickname = this.user.nickname;
+        try {
+          await axios.post(`/api/blog/acticles/${this.acticleId}/comments`, this.form);  
+          this.$notify.success('评论成功');
+          this.$emit('comment-success')
+          this.form.content = '';
+        } catch (err) {
+          console.log(err);
+          this.$notify.error('评论失败');
+        }
       }
     },
     components: {
@@ -227,23 +91,23 @@
 </script>
 
 <style>
-  .l-comment {
+  .l-comment { 
     display: flex;
   }
   .l-comment-img {
-    flex: 0 0 45px;
+    flex: 0 0 40px;
     /* flex实现垂直居中 */
     flex-direction: column;
   }
   .l-comment-img img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    padding: 5px 0;
     border-radius: 50%;
   }
   .l-comment-item {
     flex: 1;
+    margin: 5px 0;
     line-height: 20px;
-    padding: 0 10px 10px 0;
   }
   .l-comment-speak {
     margin: 0 5px;
@@ -251,7 +115,8 @@
   .l-comment-reply {
     border: none;
     outline: none;
-    margin: 0 5px;
+    margin: 0 10px;
+    float: right;
   }
   .l-comment-item .l-comment-editor p {
     padding: 0 10px;
@@ -272,10 +137,14 @@
     border: none;
     outline: none;
   }
+  .l-comment-item .l-comment-editor .l-login {
+    float: right; 
+  }
   .l-comment-button {
     float: right;
     height: 30px;
     padding: 0 10px;
+    margin: 0 0 10px;
     line-height: 30px;
     vertical-align: middle;
     color: #000;

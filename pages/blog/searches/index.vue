@@ -1,7 +1,7 @@
 <template>
   <!--懒得调试布局，直接借用el-row-->
-  <el-row>
-    <div class="l-search-wrapper">
+  <el-row v-loading="loading">
+    <div class="l-search-wrapper" >
       <div class="l-search">
           <div class="l-search-img-wrapper">
             <img src="./search.jpg" width="20px" alt="">
@@ -10,52 +10,36 @@
           <button @click="query()">搜索</button>
       </div>
       <l-search :acticles="acticles"></l-search>
+      <p class="l-search-tip" v-show="tip">非常抱歉，暂时没有搜索到相关内容~</p>
     </div>
   </el-row>
 </template>
 
 <script>
   import search from './search.vue'
+
+  import axios from 'axios'
   export default {
     layout: 'blog',
     data() {
+      let tip = false;
+      let loading = false;
       let keyword = '';
       let acticles = [];
-      return { keyword, acticles }
+      return { tip, keyword, acticles, loading }
     },
     created() {
       this.acticles = [];  
     },
     methods: {
-      query() {
-         this.acticles = [
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数2",
-            // "thumbnail":"1513493142038.jpg",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          },
-          { 
-            "_id":"5a3612965738b97164dce2c5",
-            "catalog":"58ddfb8dd2edf409e0650d4d",
-            "title":"Generator函数2",
-            // "thumbnail":"1513493142038.jpg",
-            "thumbnail": "https://www.51linwei.top/img/thumbnail/1507645939884.jpg",
-            "outline":"Generator函数是ES6提供的一种异步编程解决方案，对于Genertor函数有多种理解角度，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回，从语法上可以理解成一个状态机，封装了多个内部状态，在执行Generator函数时会返回",
-            "content": "这里是详情",
-            "isTop": true,
-            "comments": 1,
-            "reading": 100,
-            "createTime": "3个月前"
-          }
-        ];
+      async query() {
+        if (!this.keyword) return this.$notify.warning('请输出关键字');
+        this.loading = true;
+        const result = await axios.get(`/api/blog/search?keyword=${this.keyword}`);
+        if (result.data.list && result.data.list.length <1) this.tip = true;
+        else this.tip = false;
+        this.acticles = result.data.list;
+        this.loading = false;
       }
     },
     components: {
@@ -92,5 +76,7 @@
     outline: none;
     padding: 0 10px;
   }
-
+  .l-search-tip {
+    text-align: center;  
+  }
 </style>
