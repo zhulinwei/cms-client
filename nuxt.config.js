@@ -36,6 +36,7 @@ module.exports = {
   proxy: {
     // '/api/': { target: 'http://localhost:3451', pathRewrite: { '^/api/': '' } },
     '/api/': { target: 'http://localhost:3451' },
+    '/bg/': { target: 'http://localhost:3451' },
   },
   build: {
     /*

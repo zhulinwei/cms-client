@@ -48,7 +48,6 @@
   export default {
     props: [ 'user', 'comments'], 
     data() {
-      console.log(this.user)
       const acticleId = this.$route.params.id; 
       const title = '最近评论';
       let form = {
