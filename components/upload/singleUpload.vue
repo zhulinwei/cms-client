@@ -1,7 +1,8 @@
 <template>
   <el-row id="l-single-upload">
-    <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+    <el-upload class="avatar-uploader" action="https://upload.qiniu.com/" :data="token" 
+      :show-file-list="false" :on-success="success" :on-error="error" :before-upload="beforeAvatarUpload">
+      <img v-if="img" :src="img" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
   </el-row>
@@ -9,22 +10,38 @@
 
 <script>
   export default {
+    props: ['image', 'token'],
+    created() {
+      this.img = this.image;
+    },
     data() {
-      return {
-        imageUrl: ''
-      };
+      let img = '';
+      return { img };
     },
     methods: {
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+      success(res, file) {
+        this.img = URL.createObjectURL(file.raw);
+        this.$notify.success('上传成功');
+        this.$emit('finish');
+      },
+      error() {
+        this.$notify.errof('上传失败');
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG) this.$message.error('上传头像图片只能是 JPG 格式!');
-        if (!isLt2M) this.$message.error('上传头像图片大小不能超过 2MB!');
+        if (!isJPG) this.$notify.error('上传头像图片只能是 JPG 格式!');
+        if (!isLt2M) this.$notify.error('上传头像图片大小不能超过 2MB!');
         return isJPG && isLt2M;
       }
+    },
+    watch: {
+      image(img) {
+        if (img) this.img = img;
+      },
+      token(token) {
+        if (token) this.token = token;
+      } 
     }
   }
 </script>

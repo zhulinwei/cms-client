@@ -2,9 +2,7 @@
   <div class="l-detail-wrapper">
     <p class="l-detail-title">{{ acticle.title }}</p>
     <p class="l-detail-subtitle">{{ acticle.author }}</p>
-    <div>
-      {{ acticle.content }}
-    </div>
+    <div v-html="acticle.content"></div>
     <l-comment :user="user" :comments="comments" @comment-success="commentSuccess"></l-comment>
   </div>
 </template>

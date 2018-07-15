@@ -17,9 +17,9 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="缩略图" width="150">
+      <el-table-column label="缩略图" width="120">
         <template slot-scope="scope">
-          <img :src="scope.row.thumbnail" width="200px">
+          <img :src="scope.row.thumbnail" width="100px" height="100px">
         </template>
       </el-table-column>
       <el-table-column property="title" label="标题"></el-table-column>
@@ -28,7 +28,8 @@
       <el-table-column property="createTime" label="发布时间" width="100"></el-table-column>
       <el-table-column label="编辑管理" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
+          <el-button size="mini" type="primary" @click="editor(scope.row._id)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="remove(scope.row._id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,7 +62,6 @@
           sort: { _id: -1 }
         };
         const acticles = await axios.post('/bg/blog/acticles/query', { seletor, options });
-        console.log(acticles);
         this.acticles = acticles.data.list.map(acticle => {
           acticle.isTopDesc = acticle.isTop ? '是' : '否';  
           acticle.createTime = moment(acticle.createTime).format('YYYY-MM-DD');
@@ -69,14 +69,17 @@
         });
         this.count = acticles.data.count;
       },
-      async remove(acticle) {
+      editor(id) {
+        this.$router.push({path: '/admin/blog/editors', query:{ acticleId: id }});
+      },
+      async remove(id) {
         try {
           await this.$confirm('确定删除?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           });
-          await axios.delete(`/bg/blog/acticles/${acticle._id}`);
+          await axios.delete(`/bg/blog/acticles/${id}`);
           this.$notify.success('删除成功');
           this.query();
         } catch (err) {

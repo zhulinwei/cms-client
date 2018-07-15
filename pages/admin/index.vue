@@ -3,14 +3,13 @@
 </template>
 <script>
   export default {
-    layout: 'blog',
+    layout: 'admin',
     created() {
-      // 首页暂时无特别用途，暂时先跳转至博客首页
       this.skip(); 
     },
     methods: {
       skip() {
-        this.$router.push({ path: '/blog' }); 
+        this.$router.push({ path: '/admin/dashboard' }); 
       }  
     }  
   }

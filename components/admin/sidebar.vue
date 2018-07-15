@@ -72,14 +72,25 @@
             },
           ] 
         },
+        // {
+        //   "name": "微信管理",
+        //   "icon": "fa-weixin",
+        //   "subMenus": [
+        //     {
+        //       "name": "目录列表",
+        //       "url": "/admin/blog/catalogs",
+        //       "icon": "fa-folder-open" 
+        //     },
+        //   ] 
+        // },
         {
-          "name": "微信管理",
-          "icon": "fa-weixin",
+          "name": "任务管理",
+          "icon": "fa-tasks",
           "subMenus": [
             {
-              "name": "目录列表",
-              "url": "/admin/blog/catalogs",
-              "icon": "fa-folder-open" 
+              "name": "任务列表",
+              "url": "/admin/task/list",
+              "icon": "fa-sort-amount-desc" 
             },
           ] 
         },
