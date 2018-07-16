@@ -9,7 +9,7 @@
           <input type="text" v-model="keyword" placeholder="请输入搜索关键字">
           <button @click="query()">搜索</button>
       </div>
-      <l-search :acticles="acticles"></l-search>
+      <l-search :articles="articles"></l-search>
       <p class="l-search-tip" v-show="tip">非常抱歉，暂时没有搜索到相关内容~</p>
     </div>
   </el-row>
@@ -25,11 +25,11 @@
       let tip = false;
       let loading = false;
       let keyword = '';
-      let acticles = [];
-      return { tip, keyword, acticles, loading }
+      let articles = [];
+      return { tip, keyword, articles, loading }
     },
     created() {
-      this.acticles = [];  
+      this.articles = [];  
     },
     methods: {
       async query() {
@@ -38,7 +38,7 @@
         const result = await axios.get(`/api/blog/search?keyword=${this.keyword}`);
         if (result.data.list && result.data.list.length <1) this.tip = true;
         else this.tip = false;
-        this.acticles = result.data.list;
+        this.articles = result.data.list;
         this.loading = false;
       }
     },

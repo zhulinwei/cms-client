@@ -1,23 +1,23 @@
 <template>
-  <div class="l-acticle-common-wrapper">
+  <div class="l-article-common-wrapper">
     <l-title :title="title"></l-title>
-    <div class="l-acticle-common">
-      <ul v-if="acticles.length">
-        <li v-for="(acticle, index) in acticles" :key="index" class="l-acticle-common-item"  @click="detail(acticle)">
-          <router-link :to="`/blog/acticles/${acticle._id}`"  @click="detail(acticle)" :acticle="acticle">
-            <div class="l-acticle-common-img-wrapper">
-              <div class="l-acticle-common-img" :style="{ 'background-image': 'url(' + acticle.thumbnail +')' }"></div>
+    <div class="l-article-common">
+      <ul v-if="articles.length">
+        <li v-for="(article, index) in articles" :key="index" class="l-article-common-item"  @click="detail(article)">
+          <router-link :to="`/blog/articles/${article._id}`"  @click="detail(article)" :article="article">
+            <div class="l-article-common-img-wrapper">
+              <div class="l-article-common-img" :style="{ 'background-image': 'url(' + article.thumbnail +')' }"></div>
             </div>
-            <div class="l-acticle-common-summary">
-              <p class="l-acticle-common-title">{{ acticle.title }}</p>
-              <p>{{ acticle.outline }}</p>
-              <div class="l-acticle-common-explain">
+            <div class="l-article-common-summary">
+              <p class="l-article-common-title">{{ article.title }}</p>
+              <p>{{ article.outline }}</p>
+              <div class="l-article-common-explain">
                 <a href="http://www.baidu.com">Level.Z</a>
-                <span class="l-acticle-common-dot">.</span>
-                <span><a href="">{{ acticle.commentsCount }}条评论</a></span>
-                <span class="l-acticle-common-dot">.</span>
-                <span>{{ acticle.readCount }}次阅读</span>              
-                <!--<span>{{ acticle.createTime }}</span>-->
+                <span class="l-article-common-dot">.</span>
+                <span><a href="">{{ article.commentsCount }}条评论</a></span>
+                <span class="l-article-common-dot">.</span>
+                <span>{{ article.readCount }}次阅读</span>              
+                <!--<span>{{ article.createTime }}</span>-->
               </div>
             </div>
           </router-link>
@@ -33,14 +33,14 @@
 <script>
   import title from "./title.vue"
   export default {
-    props: [ 'acticles', 'residue' ],
+    props: [ 'articles', 'residue' ],
     data() {
       let title = "最新文章";
       return { title };
     },
     methods: {
-      detail(acticle) {
-        // this.acticle = acticle;
+      detail(article) {
+        // this.article = article;
       },
       nextList() {
         this.$emit('nextList');  
@@ -53,23 +53,23 @@
 </script>
 
 <style>
-  .l-acticle-common-wrapper {
+  .l-article-common-wrapper {
     flex: 1;  
   }
-  .l-acticle-common {
+  .l-article-common {
     overflow: hidden;
   }
-  .l-acticle-common-item {
+  .l-article-common-item {
     padding: 10px;
     margin-bottom: 10px;
     background-color: #fff;
   }
-  .l-acticle-common-img-wrapper {
+  .l-article-common-img-wrapper {
     width: 100%;
     height: 180px;
     display: block;
   }
-  .l-acticle-common-img {
+  .l-article-common-img {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -78,22 +78,22 @@
     background-color: #f7f8f9;
     background-position: center;
   }
-  .l-acticle-common-summary {
+  .l-article-common-summary {
     line-height: 1.7;
     overflow: hidden;
     color: #666;
   }
-  .l-acticle-common-title {
+  .l-article-common-title {
     padding: 2px 0;
     color: #333;
     overflow: hidden;
     font-size: 14px;
   }
-  .l-acticle-common-explain {
+  .l-article-common-explain {
     padding-top: 10px;
     text-align: right;
   }
-  .l-acticle-common-dot {
+  .l-article-common-dot {
     position: relative;
     top: -4px;
   }
@@ -102,18 +102,18 @@
     text-align: center;
   }
   @media (min-width: 479px) {
-    .l-acticle-common-item {
+    .l-article-common-item {
       width: 96%;
       background-color: #fff;
     }
-    .l-acticle-common-img-wrapper {
+    .l-article-common-img-wrapper {
       width: 38%;
       flex: 2;
       display: inline-block;
       height: 180px;
       overflow: hidden;
     }
-    .l-acticle-common-img {
+    .l-article-common-img {
       height: 100%;
       overflow: hidden;
       border-radius: 5px;
@@ -121,7 +121,7 @@
       background-size: cover;
       background-position: center;
     }
-    .l-acticle-common-summary {
+    .l-article-common-summary {
       width: 56%;
       margin: 0 auto;
       line-height: 1.7;

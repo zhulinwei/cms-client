@@ -57,7 +57,7 @@
             },
             {
               "name": "文章列表",
-              "url": "/admin/blog/acticles",
+              "url": "/admin/blog/articles",
               "icon": "fa-file",  
             },
             {

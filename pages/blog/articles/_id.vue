@@ -1,8 +1,8 @@
 <template>
   <div class="l-detail-wrapper">
-    <p class="l-detail-title">{{ acticle.title }}</p>
-    <p class="l-detail-subtitle">{{ acticle.author }}</p>
-    <div v-html="acticle.content"></div>
+    <p class="l-detail-title">{{ article.title }}</p>
+    <p class="l-detail-subtitle">{{ article.author }}</p>
+    <div v-html="article.content"></div>
     <l-comment :user="user" :comments="comments" @comment-success="commentSuccess"></l-comment>
   </div>
 </template>
@@ -16,28 +16,28 @@
     layout: 'blog',
     data() {
       let user = {};
-      let acticle = {};
+      let article = {};
       let comments = [];
-      let acticleId = '';
+      let articleId = '';
       let commentCount = 0;
-      return { user, acticle, comments, acticleId, commentCount };
+      return { user, article, comments, articleId, commentCount };
     },
     created() {
-      this.acticleId = this.$route.params.id || '';
+      this.articleId = this.$route.params.id || '';
       this.query();
     },
     methods: {
        async query() {
-        const acticle = await axios.get(`/api/blog/acticles/${this.acticleId}?inc=1`);
-        this.acticle = acticle.data;
+        const article = await axios.get(`/api/blog/articles/${this.articleId}?inc=1`);
+        this.article = article.data;
         const user = await axios.get('/api/users/info');
         this.user = user.data;
-        const comments = await axios.get(`/api/blog/acticles/${this.acticleId}/comments`);
+        const comments = await axios.get(`/api/blog/articles/${this.articleId}/comments`);
         this.comments = comments.data.list;
         this.commentCount = comments.data.count;
       },
       async commentSuccess() {
-        const comments = await axios.get(`/api/blog/acticles/${this.acticleId}/comments`);
+        const comments = await axios.get(`/api/blog/articles/${this.articleId}/comments`);
         this.comments = comments.data.list;
         this.commentCount = comments.data.count;
       }

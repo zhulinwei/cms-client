@@ -12,7 +12,7 @@
     <el-table :border="true" :data="catalogs" style="width: 100%">
       <el-table-column type="index" width="50"></el-table-column> 
       <el-table-column property="name" label="目录名称"></el-table-column>
-      <el-table-column property="acticleCount" label="文章数量"></el-table-column>
+      <el-table-column property="articleCount" label="文章数量"></el-table-column>
       <el-table-column label="编辑管理" width="150">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="editor(scope.row)">编辑</el-button>

@@ -48,7 +48,7 @@
   export default {
     props: [ 'user', 'comments'], 
     data() {
-      const acticleId = this.$route.params.id; 
+      const articleId = this.$route.params.id; 
       const title = '最近评论';
       let form = {
         uid: this.user.uid,
@@ -57,7 +57,7 @@
         content: '',
         to: {}
       };
-      return { title, acticleId, form };
+      return { title, articleId, form };
     },
     methods: {
       reply(comment) {
@@ -73,7 +73,7 @@
         this.form.avatar = this.user.avatar;
         this.form.nickname = this.user.nickname;
         try {
-          await axios.post(`/api/blog/acticles/${this.acticleId}/comments`, this.form);  
+          await axios.post(`/api/blog/articles/${this.articleId}/comments`, this.form);  
           this.$notify.success('评论成功');
           this.$emit('comment-success')
           this.form.content = '';

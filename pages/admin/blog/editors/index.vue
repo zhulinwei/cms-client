@@ -44,10 +44,10 @@
     layout: 'admin',
     data() {
       let catalogs = [];
-      let acticleId = '';
+      let articleId = '';
       let token = {};
       let form = {
-        acticleId: '',
+        articleId: '',
         title: '',  
         outline: '',
         content: '',
@@ -57,10 +57,10 @@
       };
       let content = '';
       let thumbnail = '';
-      return { catalogs, acticleId, form, token, content, thumbnail };
+      return { catalogs, articleId, form, token, content, thumbnail };
     },
     created() {
-      this.acticleId = this.$route.query.acticleId;
+      this.articleId = this.$route.query.articleId;
       this.query();
     },
     methods: {
@@ -70,20 +70,20 @@
         this.form.catalogId = this.catalogs && this.catalogs[0] && this.catalogs[0]._id;
         const token = await axios.get('/bg/blog/qiniu/token');
         this.token = token.data;
-        if (this.acticleId) {
-          const acticle = await axios.get(`/bg/blog/acticles/${this.acticleId}`).catch(err => {
+        if (this.articleId) {
+          const article = await axios.get(`/bg/blog/articles/${this.articleId}`).catch(err => {
             console.log(err);
             return {};  
           });
-          if (acticle && acticle.data && acticle.data._id) {
-            this.form.acticleId = acticle.data._id;
-            this.form.isTop = acticle.data.isTop;
-            this.form.title = acticle.data.title;
-            this.form.author = acticle.data.author;
-            this.form.content = acticle.data.content;
-            this.form.thumbnail = acticle.data.thumbnail;
-            this.content = acticle.data.content;
-            this.thumbnail = acticle.data.thumbnail;
+          if (article && article.data && article.data._id) {
+            this.form.articleId = article.data._id;
+            this.form.isTop = article.data.isTop;
+            this.form.title = article.data.title;
+            this.form.author = article.data.author;
+            this.form.content = article.data.content;
+            this.form.thumbnail = article.data.thumbnail;
+            this.content = article.data.content;
+            this.thumbnail = article.data.thumbnail;
           }
         }
       },
@@ -102,8 +102,8 @@
         if (!this.form.content) return this.$notify.warning('文章详情不能为空');
         this.form.outline = this.form.content.substr(0, 100); 
         try {
-          if (this.form.acticleId) await axios.put(`/bg/blog/acticles/${this.form.acticleId}`, this.form);
-          else await axios.post('/bg/blog/acticles', this.form);
+          if (this.form.articleId) await axios.put(`/bg/blog/articles/${this.form.articleId}`, this.form);
+          else await axios.post('/bg/blog/articles', this.form);
           this.$notify.success('发布成功');
         } catch (err) {
           console.log(err);

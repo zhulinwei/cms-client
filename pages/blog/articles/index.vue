@@ -3,10 +3,10 @@
     <div class="l-blog-wrapper" v-loading="loading">
       <div class="l-blog">
         <div class="l-specical">
-          <l-acticle-special :acticles="specialActicles"></l-acticle-special>
+          <l-article-special :articles="specialarticles"></l-article-special>
         </div>
         <div class="l-common" >
-          <l-acticle-common @nextList="nextList" :acticles="commonActicles" :residue="residue"></l-acticle-common>
+          <l-article-common @nextList="nextList" :articles="commonarticles" :residue="residue"></l-article-common>
           <l-menu @changeCatalog="changeCatalog" :catalogs="catalogs"></l-menu>
         </div>
       </div>
@@ -26,12 +26,12 @@
     data() {
       let catalogs = [];
       let loading = false;
-      let commonActicles = [];
-      let specialActicles = [];
+      let commonarticles = [];
+      let specialarticles = [];
       let residue = 1;
       let currentCatalog = '';
       const fields = { title: 1, catalogId: 1, thumbnail: 1, outline: 1, commentsCount: 1, readCount: 1 };
-      return { catalogs, specialActicles, commonActicles, loading, residue, currentCatalog, fields };
+      return { catalogs, specialarticles, commonarticles, loading, residue, currentCatalog, fields };
     },
     created() {
       this.query();
@@ -50,11 +50,11 @@
           sort: { _id: -1 },
           fields: this.fields
         };
-        const specialActicles = await this.$axios.post('/api/blog/acticles/query', { selector: specialSelector, options });
-        const commonActicles = await this.$axios.post('/api/blog/acticles/query', { selector: commonSelector, options });
-        this.specialActicles = specialActicles.data.list;
-        this.commonActicles = commonActicles.data.list;
-        this.residue = commonActicles.data.residue;
+        const specialarticles = await this.$axios.post('/api/blog/articles/query', { selector: specialSelector, options });
+        const commonarticles = await this.$axios.post('/api/blog/articles/query', { selector: commonSelector, options });
+        this.specialarticles = specialarticles.data.list;
+        this.commonarticles = commonarticles.data.list;
+        this.residue = commonarticles.data.residue;
       },
       async changeCatalog(catalog) {
         this.loading = true;
@@ -67,24 +67,24 @@
           sort: { _id: -1},
           fields: this.fields
         };
-        const commonActicles = await this.$axios.post('/api/blog/acticles/query', { selector, options });
-        this.commonActicles = commonActicles.data.list;
-        this.residue = commonActicles.data.residue;
+        const commonarticles = await this.$axios.post('/api/blog/articles/query', { selector, options });
+        this.commonarticles = commonarticles.data.list;
+        this.residue = commonarticles.data.residue;
         this.currentCatalog = catalog.id;
         this.loading = false;
       },
       async nextList() {
-        const lastActicleId = this.commonActicles[this.commonActicles.length -1]._id;
-        const selector = { catalogId: this.currentCatalog, acticleId: lastActicleId, isTop: false };
-        const acticles = await this.$axios.post('/api/blog/acticles/next/query', selector);
-        this.commonActicles = this.commonActicles.concat(acticles.data.list)
-        this.residue = acticles.data.residue; 
+        const lastarticleId = this.commonarticles[this.commonarticles.length -1]._id;
+        const selector = { catalogId: this.currentCatalog, articleId: lastarticleId, isTop: false };
+        const articles = await this.$axios.post('/api/blog/articles/next/query', selector);
+        this.commonarticles = this.commonarticles.concat(articles.data.list)
+        this.residue = articles.data.residue; 
       }
     },
     components: {
       "l-menu": menu,
-      "l-acticle-common": common,
-      "l-acticle-special": special,
+      "l-article-common": common,
+      "l-article-special": special,
     }
   }
 </script>

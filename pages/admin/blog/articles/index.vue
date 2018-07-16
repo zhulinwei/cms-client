@@ -1,12 +1,12 @@
 <template>
-  <el-row id="l-admin-blog-acticle">
+  <el-row id="l-admin-blog-article">
     <el-col>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>博客管理</el-breadcrumb-item>
         <el-breadcrumb-item>文章列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
-    <el-table :border="true" :data="acticles" style="width: 100%">
+    <el-table :border="true" :data="articles" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-form label-width="80px">
@@ -46,9 +46,9 @@
       let count = 0;
       let page = 1;
       let limit = 20;
-      let acticles = [];
+      let articles = [];
 
-      return { count, page, limit, acticles };
+      return { count, page, limit, articles };
     },
     created() {
       this.query();  
@@ -61,16 +61,16 @@
           limit: this.limit,
           sort: { _id: -1 }
         };
-        const acticles = await axios.post('/bg/blog/acticles/query', { seletor, options });
-        this.acticles = acticles.data.list.map(acticle => {
-          acticle.isTopDesc = acticle.isTop ? '是' : '否';  
-          acticle.createTime = moment(acticle.createTime).format('YYYY-MM-DD');
-          return acticle;
+        const articles = await axios.post('/bg/blog/articles/query', { seletor, options });
+        this.articles = articles.data.list.map(article => {
+          article.isTopDesc = article.isTop ? '是' : '否';  
+          article.createTime = moment(article.createTime).format('YYYY-MM-DD');
+          return article;
         });
-        this.count = acticles.data.count;
+        this.count = articles.data.count;
       },
       editor(id) {
-        this.$router.push({path: '/admin/blog/editors', query:{ acticleId: id }});
+        this.$router.push({path: '/admin/blog/editors', query:{ articleId: id }});
       },
       async remove(id) {
         try {
@@ -79,7 +79,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           });
-          await axios.delete(`/bg/blog/acticles/${id}`);
+          await axios.delete(`/bg/blog/articles/${id}`);
           this.$notify.success('删除成功');
           this.query();
         } catch (err) {

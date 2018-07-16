@@ -21,7 +21,7 @@
 
       <el-table-column property="nickname" label="用户昵称" width="100"></el-table-column>
       <el-table-column property="content" label="内容"></el-table-column>
-      <el-table-column property="acticle.title" label="文章标题"></el-table-column>
+      <el-table-column property="article.title" label="文章标题"></el-table-column>
       <el-table-column label="回复评论">
         <template slot-scope="scope">
           <span v-if="scope.row.to && scope.row.to.content">{{ scope.row.to.content }}</span>

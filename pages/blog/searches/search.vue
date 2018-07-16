@@ -1,12 +1,12 @@
 <template>
-  <div class="l-acticle-search-wrapper" :acticle="acticles">
-    <div class="l-acticle-search">
+  <div class="l-article-search-wrapper" :article="articles">
+    <div class="l-article-search">
       <ul>
-        <li v-for="(acticle, index) in acticles" :key="index" class="l-acticle-search-item"  @click="detail(acticle)">
-          <router-link :to="`/blog/acticles/${acticle._id}`"  @click="detail(acticle)" :acticle="acticle">
-            <div class="l-acticle-search-summary">
-              <p class="l-acticle-search-title">{{ acticle.title }}</p>
-              <p>{{ acticle.outline }}</p>
+        <li v-for="(article, index) in articles" :key="index" class="l-article-search-item"  @click="detail(article)">
+          <router-link :to="`/blog/articles/${article._id}`"  @click="detail(article)" :article="article">
+            <div class="l-article-search-summary">
+              <p class="l-article-search-title">{{ article.title }}</p>
+              <p>{{ article.outline }}</p>
             </div>
           </router-link>
         </li>
@@ -16,51 +16,51 @@
 </template>
 
 <script>
-  import detail from "../acticles/_id.vue"
+  import detail from "../articles/_id.vue"
   export default {
     layout: 'blog',
-    props: [ 'acticles' ],
+    props: [ 'articles' ],
     data() {
       return { };
     },
     methods: {
-      detail(acticle) {
-        this.acticle = acticle;
+      detail(article) {
+        this.article = article;
       }
     },
     components: {
-      "l-acticle-detail": detail,
+      "l-article-detail": detail,
     }
   }
 </script>
 
 <style>
-  .l-acticle-search-wrapper {
+  .l-article-search-wrapper {
     max-width: 960px;
     overflow: hidden;
   }
-  .l-acticle-search-item {
+  .l-article-search-item {
     padding: 10px;
     margin-bottom: 10px;
     background-color: #fff;
   }
-  .l-acticle-search-summary {
+  .l-article-search-summary {
     line-height: 1.7;
     overflow: hidden;
     color: #666;
   }
-  .l-acticle-search-title {
+  .l-article-search-title {
     padding: 2px 0;
     color: #333;
     overflow: hidden;
     font-size: 14px;
   }
   @media (min-width: 479px) {
-    .l-acticle-search-item {
+    .l-article-search-item {
       width: 100%;
       background-color: #fff;
     }
-    .l-acticle-search-summary {
+    .l-article-search-summary {
       width: 98%;
       margin: 0 auto;
       line-height: 1.7;
