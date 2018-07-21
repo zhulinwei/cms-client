@@ -5,13 +5,9 @@
     </el-breadcrumb>
 
     <el-col class='a'>博客统计</el-col>
-    <el-col :span="6" v-for="(o) in 4" :key="o" >
+    <el-col :span="6" v-for="(item, index) in basics" :key="index" >
       <el-card>
-        <span>好吃的汉堡</span>
-        <div class="bottom clearfix">
-          <time class="time">123</time>
-          <el-button type="text" class="button">操作按钮</el-button>
-        </div>
+        <p><span>{{ item.name }}</span>:<span>{{ item.count }}</span></p>
       </el-card>
     </el-col>
 
@@ -50,56 +46,69 @@
     FINISHED: 2 
   };
 
-  const option = {
-title : {
-text: '某站点用户访问来源',
-      subtext: '纯属虚构',
-      x:'center'
-        },
-tooltip : {
-trigger: 'item',
-         formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-legend: {
-orient: 'vertical',
+  function articlesOptions(data) {
+    console.log(2)
+    console.log(data);
+    const legendData = data.map(item => item.name);
+    const seriesData = data.map(item => {
+      return {
+        name: item.name,
+        value: item.articleCount,  
+      };  
+    });
+    console.log(legendData);
+    console.log(seriesData);
+    return {
+      title: {
+        text: "博客文章分布图",
+        x:'center'
+      },
+      tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        orient: 'vertical',
         left: 'left',
-        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-        },
-series : [
-         {
-name: '访问来源',
-      type: 'pie',
-      radius : '55%',
-      center: ['50%', '60%'],
-      data:[
-      {value:335, name:'直接访问'},
-      {value:310, name:'邮件营销'},
-      {value:234, name:'联盟广告'},
-      {value:135, name:'视频广告'},
-      {value:1548, name:'搜索引擎'}
-      ],
-      itemStyle: {
-emphasis: {
-shadowBlur: 10,
+        // data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        data: legendData
+      },
+      series : [{
+        name: '文章数量',
+        type: 'pie',
+        radius : '55%',
+        center: ['50%', '60%'],
+        data: seriesData,
+        // data:[
+        //   {value:335, name:'直接访问'},
+        //   {value:310, name:'邮件营销'},
+        //   {value:234, name:'联盟广告'},
+        //   {value:135, name:'视频广告'},
+        //   {value:1548, name:'搜索引擎'}
+        // ],
+        itemStyle: {
+          emphasis: {
+            shadowBlur: 10,
             shadowOffsetX: 0,
             shadowColor: 'rgba(0, 0, 0, 0.5)'
           }
-      }
-         }
-        ]
+        }
+      }]
+    }
   };
 
   export default {
     layout: 'admin',
     data() {
       // 博客文章总量、当月新增数量、当月阅读次数、当月评论数量
+      let chart = {};
       let tasks = [];
-      return {
-        tasks, StateType 
-      }
+      let basics = [];
+      let articles = [];
+      return { chart, tasks, basics, articles, StateType };
     },
-    created() {
-      this.query();  
+    async created() {
+      await this.query(); 
     },
     methods: {
       async query() {
@@ -109,11 +118,13 @@ shadowBlur: 10,
         };
         const tasks = await axios.post('/bg/tasks/query', { seletor, options });
         this.tasks = tasks.data.list;
-        console.log(this.tasks)
+        const statisticOfBlog = await axios.get('/bg/statistics/blog');
+        this.basics = statisticOfBlog.data.basics;
+        this.articles = statisticOfBlog.data.articles;
+        this.chart.setOption(articlesOptions(this.articles));
       },
       initEchart() {
-        const chart1 = echarts.init(this.$refs.test); 
-        chart1.setOption(option);
+        this.chart = echarts.init(this.$refs.test); 
       } 
     },
     mounted() {

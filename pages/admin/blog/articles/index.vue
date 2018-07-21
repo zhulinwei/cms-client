@@ -57,6 +57,7 @@
       async query() {
         let seletor = {};
         let options = {
+          fields: { title: 1, isTop: 1, thumbnail: 1, author: 1, createTime: 1 },
           skip: (this.page - 1) * this.limit,
           limit: this.limit,
           sort: { _id: -1 }

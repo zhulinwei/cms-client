@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="l-comment-wrapper">
     <l-title :title="title"></l-title>
-    <div class="l-comment-wrapper">
+    <div>
       <div class="l-comment" v-for="(item, index) in comments" :key="index">
         <div class="l-comment-img">
           <img :src="item.avatar" alt="">
@@ -90,6 +90,9 @@
 </script>
 
 <style>
+  .l-comment-wrapper {
+    padding: 0 10px;   
+  }
   .l-comment { 
     display: flex;
   }

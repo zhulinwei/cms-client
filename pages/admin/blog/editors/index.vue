@@ -68,7 +68,7 @@
         const catalogs = await axios.get('/bg/blog/catalogs');
         this.catalogs = catalogs.data.list;
         this.form.catalogId = this.catalogs && this.catalogs[0] && this.catalogs[0]._id;
-        const token = await axios.get('/bg/blog/qiniu/token');
+        const token = await axios.get('/bg/qiniu/token?type=blog');
         this.token = token.data;
         if (this.articleId) {
           const article = await axios.get(`/bg/blog/articles/${this.articleId}`).catch(err => {
@@ -89,7 +89,7 @@
       },
       async uploadFinish() {
         this.form.thumbnail = this.token.key;
-        const token = await axios.get('/bg/blog/qiniu/token');
+        const token = await axios.get('/bg/qiniu/token?type=blog');
         this.token = token.data;
       },
       async editorFinish(html) {
@@ -100,7 +100,7 @@
         if (!this.form.author) return this.$notify.warning('请填写文章作者');
         if (!this.form.title) return this.$notify.warning('题目不能为空');
         if (!this.form.content) return this.$notify.warning('文章详情不能为空');
-        this.form.outline = this.form.content.substr(0, 100); 
+        this.form.outline = this.form.content.replace(/<[^>]*>|/g,"").replace(/&nbsp;/g, '').substr(0, 100); 
         try {
           if (this.form.articleId) await axios.put(`/bg/blog/articles/${this.form.articleId}`, this.form);
           else await axios.post('/bg/blog/articles', this.form);
@@ -120,7 +120,8 @@
 
 <style>
   #l-admin-blog-editor .el-form-item__content {
-    line-height: 0px;  
+    /* 注意这个值不要随意更改，可能会影响编辑器样式 */
+    line-height: 20px;
   }
   #l-admin-blog-editor .el-switch__core {
     margin-top: 20px;

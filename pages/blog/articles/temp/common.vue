@@ -24,8 +24,8 @@
         </li>
       </ul>
       <p v-else>暂无{{ title }}</p>
-      <p class="l-loading-more" v-if="residue > 0"><a @click="nextList" src="javascript:;">点击加载更多~</a></p>
-      <p class="l-loading-more" v-else>已经到底线啦~</p>
+      <p class="l-loading-more" v-if="articles.length && residue"><a @click="nextList" src="javascript:;">点击加载更多~</a></p>
+      <p class="l-loading-more" v-else-if="articles.length && !residue">已经到底线啦~</p>
     </div>
   </div>
 </template>

@@ -27,8 +27,7 @@ module.exports = {
   ],
   plugins: [
     { src: '@/plugins/element-ui' },
-    // { src: '@/plugins/editor', ssr: false },
-    // { src: '@/plugins/echarts', ssr: false },
+    { src: '@/plugins/editor', ssr: false },
   ],
   modules: [
     '@nuxtjs/axios',
