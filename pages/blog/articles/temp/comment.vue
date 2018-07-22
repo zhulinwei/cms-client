@@ -120,6 +120,12 @@
     margin: 0 10px;
     float: right;
   }
+ .l-comment-item .l-comment-editor {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px #ccc solid;
+  }
   .l-comment-item .l-comment-editor p {
     padding: 0 10px;
     background-color: #fafafa;
@@ -127,11 +133,6 @@
     color: #333;
     line-height: 32px;
     overflow: hidden;  
-  }
-  .l-comment-item .l-comment-editor {
-    margin-bottom: 10px;
-    border-radius: 5px;
-    overflow: hidden;
   }
   .l-comment-item .l-comment-editor textarea {
     width: 100%;

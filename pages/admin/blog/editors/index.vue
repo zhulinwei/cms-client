@@ -24,11 +24,14 @@
       <el-form-item label="是否置顶">
         <el-switch v-model="form.isTop" active-color="#4C3B2F" inactive-color="#ccc"></el-switch>
       </el-form-item>
+      <el-form-item label="文章概要">
+        <el-input v-model="form.outline"></el-input>
+      </el-form-item>
       <el-form-item label="文章详情">
         <l-text-editor :content="content" v-on:finish="editorFinish"></l-text-editor>
       </el-form-item>
       <el-form-item label="">
-        <el-button type="primary" size="small" @click="save">发布</el-button>
+        <el-button type="primary" size="small" @click="save">保存</el-button>
       </el-form-item>
     </el-form>
   </el-row>
@@ -80,8 +83,10 @@
             this.form.isTop = article.data.isTop;
             this.form.title = article.data.title;
             this.form.author = article.data.author;
+            this.form.outline = article.data.outline;
             this.form.content = article.data.content;
             this.form.thumbnail = article.data.thumbnail;
+            this.form.catalogId = article.data.catalogId;
             this.content = article.data.content;
             this.thumbnail = article.data.thumbnail;
           }
@@ -100,11 +105,12 @@
         if (!this.form.author) return this.$notify.warning('请填写文章作者');
         if (!this.form.title) return this.$notify.warning('题目不能为空');
         if (!this.form.content) return this.$notify.warning('文章详情不能为空');
-        this.form.outline = this.form.content.replace(/<[^>]*>|/g,"").replace(/&nbsp;/g, '').substr(0, 100); 
+        if (!this.form.outline) return this.$notify.warning('文章详情不能为空');
+        // this.form.outline = this.form.content.replace(/<[^>]*>|/g,"").replace(/&nbsp;/g, '').substr(0, 100); 
         try {
           if (this.form.articleId) await axios.put(`/bg/blog/articles/${this.form.articleId}`, this.form);
           else await axios.post('/bg/blog/articles', this.form);
-          this.$notify.success('发布成功');
+          this.$notify.success('保存成功');
         } catch (err) {
           console.log(err);
           this.$notify.error('发布失败');  

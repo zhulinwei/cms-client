@@ -46,7 +46,7 @@
         const specialSelector = { isTop: true };
         const commonSelector = { isTop: false };
         const options = { 
-          limit: 20,
+          limit: 50,
           sort: { _id: -1 },
           fields: this.fields
         };
