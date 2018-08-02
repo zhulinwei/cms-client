@@ -107,6 +107,9 @@
         if (!this.form.content) return this.$notify.warning('文章详情不能为空');
         if (!this.form.outline) return this.$notify.warning('文章详情不能为空');
         // this.form.outline = this.form.content.replace(/<[^>]*>|/g,"").replace(/&nbsp;/g, '').substr(0, 100); 
+        console.log(this.form);
+        console.log(this.form.articleId);
+
         try {
           if (this.form.articleId) await axios.put(`/bg/blog/articles/${this.form.articleId}`, this.form);
           else await axios.post('/bg/blog/articles', this.form);

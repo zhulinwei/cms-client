@@ -3,7 +3,7 @@
     <div class="l-detail">
       <p class="l-detail-title">{{ article.title }}</p>
       <p class="l-detail-subtitle">{{ article.author }}</p>
-      <div v-html="article.content"></div>
+      <div class="l-detail-content" v-html="article.content"></div>
     </div>
     <l-comment :user="user" :comments="comments" @comment-success="commentSuccess"></l-comment>
   </div>
@@ -11,9 +11,14 @@
 
 <script>
   import comment from './temp/comment.vue'
-
   import axios from 'axios'
   import moment from 'moment'
+
+  const userRoleType = {
+    USER: 'user',
+    TOURIST: 'tourist'
+  };
+
   export default {
     layout: 'blog',
     data() {
@@ -54,8 +59,8 @@
 
 <style>
   .l-detail-wrapper {
-    line-height: 18px;
-    font-size: 12px;
+    /* line-height: 1.5; */
+    /* font-size: 15px; */
     width: 100%; 
     max-width: 960px;
     margin: 20px auto 0;
@@ -71,6 +76,10 @@
   }
   .l-detail-subtitle {
     text-align: center;
+  }
+  .l-detail-content {
+    font-size: 15px;
+    line-height: 1.8em;  
   }
   /* table 样式 */
   .l-detail-wrapper table {

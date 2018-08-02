@@ -1,17 +1,15 @@
 <template>
-  <el-col id="l-admin-bashboard">
+  <el-col id="l-admin-bashboard" v-loading="loading">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>控制面板</el-breadcrumb-item>
     </el-breadcrumb>
-
-    <el-col class='a'>博客统计</el-col>
+    <el-col class='l-admin-bashboard-title'>博客统计</el-col>
     <el-col :span="6" v-for="(item, index) in basics" :key="index" >
       <el-card>
         <p><span>{{ item.name }}</span>:<span>{{ item.count }}</span></p>
       </el-card>
     </el-col>
-
-    <el-col class='a'>博客统计</el-col>
+    <el-col class='l-admin-bashboard-title'>博客统计</el-col>
     <el-col :span="12">
       <el-card>
         <div id="echart" ref="test" style="width: 500px;height: 200px;"></div>  
@@ -20,10 +18,10 @@
     
     <el-col :span="12">
       <el-card>
-        <el-table :border="true" :data="tasks" style="width: 100%">
+        <el-table :border="true" :data="tasks" style="width: 100%;font-size: 12px">
           <el-table-column label="任务名称" property="name"></el-table-column>
-          <el-table-column label="开发人员" property="nominee"></el-table-column>
-          <el-table-column label="进度描述">
+          <el-table-column label="开发人员" property="nominee" width="80"></el-table-column>
+          <el-table-column label="进度描述" width="80">
             <template slot-scope="scope">
               <el-tag v-show="scope.row.status === StateType.INIT" type="info" size="small">待开发</el-tag>
               <el-tag v-show="scope.row.status === StateType.WORKING" type="primary" size="small">进行中</el-tag>
@@ -47,8 +45,6 @@
   };
 
   function articlesOptions(data) {
-    console.log(2)
-    console.log(data);
     const legendData = data.map(item => item.name);
     const seriesData = data.map(item => {
       return {
@@ -56,8 +52,6 @@
         value: item.articleCount,  
       };  
     });
-    console.log(legendData);
-    console.log(seriesData);
     return {
       title: {
         text: "博客文章分布图",
@@ -79,13 +73,6 @@
         radius : '55%',
         center: ['50%', '60%'],
         data: seriesData,
-        // data:[
-        //   {value:335, name:'直接访问'},
-        //   {value:310, name:'邮件营销'},
-        //   {value:234, name:'联盟广告'},
-        //   {value:135, name:'视频广告'},
-        //   {value:1548, name:'搜索引擎'}
-        // ],
         itemStyle: {
           emphasis: {
             shadowBlur: 10,
@@ -105,16 +92,19 @@
       let tasks = [];
       let basics = [];
       let articles = [];
-      return { chart, tasks, basics, articles, StateType };
+      let loading = false;
+      return { chart, tasks, basics, articles, StateType, loading };
     },
     async created() {
       await this.query(); 
     },
     methods: {
       async query() {
+        this.loading = true;
         const seletor = {};
         const options = {
-          limit: 5  
+          limit: 3,
+          sort: { _id: -1 } 
         };
         const tasks = await axios.post('/bg/tasks/query', { seletor, options });
         this.tasks = tasks.data.list;
@@ -122,6 +112,7 @@
         this.basics = statisticOfBlog.data.basics;
         this.articles = statisticOfBlog.data.articles;
         this.chart.setOption(articlesOptions(this.articles));
+        this.loading = false;
       },
       initEchart() {
         this.chart = echarts.init(this.$refs.test); 
@@ -142,7 +133,7 @@
   #l-admin-bashboard .el-card {
     margin-right: 10px;  
   } 
-  .a {
+  .l-admin-bashboard-title {
     margin: 10px 0;  
     font-size: 16px;
   }

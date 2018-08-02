@@ -45,7 +45,7 @@
     data() {
       let count = 0;
       let page = 1;
-      let limit = 50;
+      let limit = 20;
       let articles = [];
 
       return { count, page, limit, articles };

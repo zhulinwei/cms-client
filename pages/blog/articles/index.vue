@@ -38,7 +38,7 @@
     },
     methods: {
       async query() {
-        const catalogs = await this.$axios.get('/api/blog/catalogs');
+        const catalogs = await axios.get('/api/blog/catalogs');
         this.catalogs = catalogs.data.list.map(catalog => {
           return { id: catalog._id, name: catalog.name }
         });
@@ -46,12 +46,12 @@
         const specialSelector = { isTop: true };
         const commonSelector = { isTop: false };
         const options = { 
-          limit: 50,
+          limit: 20,
           sort: { _id: -1 },
           fields: this.fields
         };
-        const specialarticles = await this.$axios.post('/api/blog/articles/query', { selector: specialSelector, options });
-        const commonarticles = await this.$axios.post('/api/blog/articles/query', { selector: commonSelector, options });
+        const specialarticles = await axios.post('/api/blog/articles/query', { selector: specialSelector, options });
+        const commonarticles = await axios.post('/api/blog/articles/query', { selector: commonSelector, options });
         this.specialarticles = specialarticles.data.list;
         this.commonarticles = commonarticles.data.list;
         this.residue = commonarticles.data.residue;
@@ -67,7 +67,7 @@
           sort: { _id: -1},
           fields: this.fields
         };
-        const commonarticles = await this.$axios.post('/api/blog/articles/query', { selector, options });
+        const commonarticles = await axios.post('/api/blog/articles/query', { selector, options });
         this.commonarticles = commonarticles.data.list;
         this.residue = commonarticles.data.residue;
         this.currentCatalog = catalog.id;
@@ -76,7 +76,7 @@
       async nextList() {
         const lastarticleId = this.commonarticles[this.commonarticles.length -1]._id;
         const selector = { catalogId: this.currentCatalog, articleId: lastarticleId, isTop: false };
-        const articles = await this.$axios.post('/api/blog/articles/next/query', selector);
+        const articles = await axios.post('/api/blog/articles/next/query', selector);
         this.commonarticles = this.commonarticles.concat(articles.data.list)
         this.residue = articles.data.residue; 
       }

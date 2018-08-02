@@ -29,8 +29,8 @@
         </div>
         <div class="l-comment-item">
           <div class="l-comment-editor">
-            <p><span>我要评论</span><span class="l-login"><a href="javascript:;">登录</a></span></p>
-            <textarea v-model="form.content" type="text" placeholder="写下你的回复" class="comment-input" ref="comment-input"/> 
+            <p><span>我要评论</span><span class="l-login"><a :href="loginUrl" v-show="user && user.role === userRoleType.TOURIST">登录</a></span></p>
+            <textarea v-model="form.content" type="text" :placeholder="placeholder" class="comment-input" ref="comment-input"/> 
           </div>
           <div class="l-comment-footer">
             <button class="l-comment-button" @click="submit">发表评论</button>
@@ -43,13 +43,23 @@
 
 <script>
   import title from "./title.vue"
-
   import axios from 'axios'
+
+  const userRoleType = {
+    USER: 'user',
+    TOURIST: 'tourist'
+  };
+
+  const host = 'http://www.51linwei.top';
   export default {
     props: [ 'user', 'comments'], 
+    created() {
+      this.buildLoginUrl();
+    },
     data() {
       const articleId = this.$route.params.id; 
       const title = '最近评论';
+      let placeholder = '写下你的回复';
       let form = {
         uid: this.user.uid,
         avatar: this.user.avatar,
@@ -57,7 +67,8 @@
         content: '',
         to: {}
       };
-      return { title, articleId, form };
+      let loginUrl = '';
+      return { title, articleId, form, placeholder, loginUrl, userRoleType };
     },
     methods: {
       reply(comment) {
@@ -66,6 +77,7 @@
           avatar: comment.avatar,
           nickname: comment.nickname  
         };
+        this.placeholder = `回复${comment.nickname}`;
         this.$refs['comment-input'].focus();
       },
       async submit() {
@@ -81,6 +93,12 @@
           console.log(err);
           this.$notify.error('评论失败');
         }
+      },
+      buildLoginUrl() {
+        const referer = encodeURIComponent(`${host}${this.$route.path}`);
+        const redirectUrl = encodeURIComponent(`${host}/api/auth/qq/login?referer=${referer}`); 
+        const url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101405670&redirect_uri=${redirectUrl}&scope=get_user_info`;
+        this.loginUrl = url;
       }
     },
     components: {
