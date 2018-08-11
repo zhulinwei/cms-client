@@ -3,7 +3,7 @@
     <div class="l-article-search">
       <ul>
         <li v-for="(article, index) in articles" :key="index" class="l-article-search-item"  @click="detail(article)">
-          <router-link :to="`/blog/articles/${article._id}`"  @click="detail(article)" :article="article">
+          <router-link :to="`/blog/articles/detail?acticleId=${article._id}`"  @click="detail(article)" :article="article">
             <div class="l-article-search-summary">
               <p class="l-article-search-title">{{ article.title }}</p>
               <p>{{ article.outline }}</p>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import detail from "../articles/_id.vue"
+  import detail from "../articles/detail.vue"
   export default {
     layout: 'blog',
     props: [ 'articles' ],

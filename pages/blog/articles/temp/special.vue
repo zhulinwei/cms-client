@@ -5,7 +5,7 @@
       <ul v-if="articles.length">
         <li class="l-article-special-item" v-for="(article, index) in articles" :key="index">
           <div class="l-article-special-main">
-            <router-link  class="l-article-special-item" :to="`/blog/articles/${article._id}`" @click="detail(article)" :article="article">
+            <router-link  class="l-article-special-item" :to="`/blog/articles/detail?acticleId=${article._id}`" @click="detail(article)" :article="article">
               <div class="l-article-special-img-wrapper">
                 <div class="l-article-special-img" :style="{ 'background-image': 'url(' + article.thumbnail +')' }"></div>
               </div> 

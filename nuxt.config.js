@@ -1,9 +1,11 @@
+const axios = require('axios');
+
 module.exports = {
   /*
   ** Headers of the page
   */
   head: {
-    title: 'cms',
+    title: 'Level.Z',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -38,6 +40,17 @@ module.exports = {
     '/api/': { target: 'http://localhost:3451' },
     '/bg/': { target: 'http://localhost:3451' },
   },
+  // generate:{
+  //   routes: function () {
+  //     const options = { fields: { _id: 1 } } 
+  //     return axios.post('http://localhost:7800/api/blog/articles/query', { selector: {}, options })
+  //       .then(res => {
+  //         return res.data.list.map((v) => {
+  //           return '/blog/articles/' + v._id;
+  //         });
+  //       })  
+  //   }
+  // }, 
   build: {
     /*
     ** Run ESLint on save

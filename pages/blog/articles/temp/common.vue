@@ -4,7 +4,7 @@
     <div class="l-article-common">
       <ul v-if="articles.length">
         <li v-for="(article, index) in articles" :key="index" class="l-article-common-item"  @click="detail(article)">
-          <router-link :to="`/blog/articles/${article._id}`"  @click="detail(article)" :article="article">
+          <router-link :to="`/blog/articles/detail?acticleId=${article._id}`"  @click="detail(article)" :article="article">
             <div class="l-article-common-img-wrapper">
               <div class="l-article-common-img" :style="{ 'background-image': 'url(' + article.thumbnail +')' }"></div>
             </div>

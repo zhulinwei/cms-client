@@ -95,7 +95,7 @@
         }
       },
       buildLoginUrl() {
-        const referer = encodeURIComponent(`${host}${this.$route.path}`);
+        const referer = encodeURIComponent(`${host}${this.$route.fullPath}`);
         const redirectUrl = encodeURIComponent(`${host}/api/auth/qq/login?referer=${referer}`); 
         const url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101405670&redirect_uri=${redirectUrl}&scope=get_user_info`;
         this.loginUrl = url;

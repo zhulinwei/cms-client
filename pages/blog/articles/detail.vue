@@ -32,7 +32,8 @@
       return { user, article, comments, articleId, commentCount };
     },
     created() {
-      this.articleId = this.$route.params.id || '';
+      console.log(this.$route)
+      this.articleId = this.$route.query.acticleId || '';
       this.query();
     },
     methods: {
