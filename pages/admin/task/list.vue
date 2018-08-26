@@ -91,7 +91,7 @@
         let options = {
           skip: (this.page - 1) * this.limit,
           limit: this.limit,
-          sort: { _id: -1 }
+          sort: { status: 1 }
         };
         const tasks = await axios.post('/bg/tasks/query', { seletor, options });
         console.log(tasks);
