@@ -38,20 +38,16 @@
     },
     methods: {
       async query() {
-        const catalogs = await axios.get('/api/blog/catalogs');
-        this.catalogs = catalogs.data.list.map(catalog => {
-          return { id: catalog._id, name: catalog.name }
-        });
-        
+        // 侧边栏
+        const catalogs = await axios.get('/api/blog/catalogs');       
+        // 置顶文章
         const specialSelector = { isTop: true };
+        // 普通文件
         const commonSelector = { isTop: false };
-        const options = { 
-          limit: 20,
-          sort: { _id: -1 },
-          fields: this.fields
-        };
+        const options = { limit: 20, sort: { _id: -1 }, fields: this.fields };
         const specialarticles = await axios.post('/api/blog/articles/query', { selector: specialSelector, options });
         const commonarticles = await axios.post('/api/blog/articles/query', { selector: commonSelector, options });
+        this.catalogs = catalogs.data.list.map(catalog => { id: catalog._id, name: catalog.name });
         this.specialarticles = specialarticles.data.list;
         this.commonarticles = commonarticles.data.list;
         this.residue = commonarticles.data.residue;
