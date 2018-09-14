@@ -1,0 +1,8 @@
+{
+  "apps" : [{
+    "name"        : "cms_client",
+    "script"      : "npm",
+    "args"        : "start",
+    "watch"       : [".nuxt"],   // 监控输出目录
+  }]
+}

@@ -105,7 +105,7 @@
         if (!this.form.author) return this.$notify.warning('请填写文章作者');
         if (!this.form.title) return this.$notify.warning('题目不能为空');
         if (!this.form.content) return this.$notify.warning('文章详情不能为空');
-        if (!this.form.outline) return this.$notify.warning('文章详情不能为空');
+        if (!this.form.outline) return this.$notify.warning('文章摘要不能为空');
         // this.form.outline = this.form.content.replace(/<[^>]*>|/g,"").replace(/&nbsp;/g, '').substr(0, 100); 
 
         try {
