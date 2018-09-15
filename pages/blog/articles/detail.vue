@@ -116,6 +116,7 @@
     border-radius: 3px;
     padding: 3px 5px;
     margin: 0 3px;
+    overflow: auto;
   }
   .l-detail-wrapper pre code {
     display: block;

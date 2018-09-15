@@ -37,7 +37,7 @@
     },
     watch: {
       image(img) {
-        if (img) this.img = img;
+        if (typeof img === 'string') this.img = img;
       },
       token(token) {
         if (token) this.token = token;

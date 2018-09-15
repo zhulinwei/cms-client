@@ -32,7 +32,9 @@
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="开发人员" label-width="80px">
-          <el-input v-model="form.nominee" auto-complete="off"></el-input>
+          <el-select v-model="form.nominee" clearable allow-create filterable placeholder="请输入">
+            <el-option key="Level.Z" label="Level.Z" value="Level.Z"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="任务进度" label-width="80px" v-show="form._id">
           <el-select v-model="form.status" placeholder="请选择">
@@ -70,7 +72,7 @@
       let form = {
         _id: '',
         name: '',
-        nominee: '',  
+        nominee: 'Level.Z',  
         status: 0
       };
       let title = '';
@@ -91,7 +93,7 @@
         let options = {
           skip: (this.page - 1) * this.limit,
           limit: this.limit,
-          sort: { status: 1 }
+          sort: { status: 1, _id: -1 }
         };
         const tasks = await axios.post('/bg/tasks/query', { seletor, options });
         console.log(tasks);

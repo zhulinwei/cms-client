@@ -24,8 +24,8 @@
       </div>
       <div class="l-comment">
         <div class="l-comment-img">
-          <img v-if="user.avatar" :src="user.avatar" alt="">
-          <img v-else src="~static/images/tourist_avatar.png" />
+          <img v-if="user.avatar" :src="user.avatar" alt="" />
+          <img v-else src="~static/images/tourist_avatar.png" style="width: 40px;height: 30px"/>
         </div>
         <div class="l-comment-item">
           <div class="l-comment-editor">
@@ -120,8 +120,9 @@
     flex-direction: column;
   }
   .l-comment-img img {
-    width: 40px;
-    padding: 5px 0;
+    width: 35px;
+    height: 35px;
+    margin: 5px 0;
     border-radius: 50%;
   }
   .l-comment-item {

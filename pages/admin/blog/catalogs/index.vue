@@ -75,7 +75,7 @@
       },
       async save() {
         if (!this.form.name) return this.$notify.warning('无效的目录名称');
-        if (!this.form.weight) return this.$notify.warning('无效的目录权重');
+        if (typeof this.form.weight != 'number') return this.$notify.warning('无效的目录权重');
         try {
           if (this.form._id) await axios.put(`/bg/blog/catalogs/${this.form._id}`, this.form);
           else await await axios.post('/bg/blog/catalogs', this.form);

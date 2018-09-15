@@ -16,7 +16,9 @@
         <l-single-upload :image="thumbnail" :token="token" v-on:finish="uploadFinish"></l-single-upload>  
       </el-form-item>
       <el-form-item label="作者名称">
-        <el-input v-model="form.author"></el-input>
+        <el-select v-model="form.author" clearable allow-create filterable placeholder="请输入">
+          <el-option key="Level.Z" label="Level.Z" value="Level.Z"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="文章标题">
         <el-input v-model="form.title"></el-input>
@@ -32,6 +34,7 @@
       </el-form-item>
       <el-form-item label="">
         <el-button type="primary" size="small" @click="save">保存</el-button>
+        <el-button type="success" size="small" @click="finish">完成</el-button>
       </el-form-item>
     </el-form>
   </el-row>
@@ -52,6 +55,7 @@
       let form = {
         articleId: '',
         title: '',  
+        author: '',  
         outline: '',
         content: '',
         thumbnail: '',
@@ -118,6 +122,19 @@
           console.log(err);
           this.$notify.error('发布失败');  
         }
+      },
+      finish() {
+        this.form.articleId = '';
+        this.form.isTop = false;
+        this.form.title = '';
+        this.form.author = '';
+        this.form.outline = '';
+        this.form.content = '';
+        this.form.thumbnail = '';
+        this.form.catalogId = '';
+        this.content = '';
+        this.thumbnail = '';
+        this.$router.push({ path: '/admin/blog/editors' });
       } 
     },
     components: {
