@@ -6,6 +6,19 @@
         <el-breadcrumb-item>文章列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
+    <el-col>
+      <el-form :inline="true" :model="article" label-width="80px">
+        <el-form-item label="文章题目">
+          <el-input size="small" v-model="article.title" width="100px"></el-input>
+        </el-form-item>
+        <el-form-item label="文章详情">
+          <el-input size="small" v-model="article.content" width="100px"></el-input>
+        </el-form-item>
+        <el-form-item> 
+          <el-button size="mini" type="primary" @click="query">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </el-col>
     <el-table :border="true" :data="articles" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="scope">
@@ -46,23 +59,28 @@
       let count = 0;
       let page = 1;
       let limit = 20;
+      let article = {
+        title: '',
+        content: '', 
+      };
       let articles = [];
-
-      return { count, page, limit, articles };
+      return { count, page, limit, article, articles };
     },
     created() {
       this.query();  
     },
     methods: {
       async query() {
-        let seletor = {};
+        let selector = {};
         let options = {
           fields: { title: 1, isTop: 1, thumbnail: 1, author: 1, createTime: 1 },
           skip: (this.page - 1) * this.limit,
           limit: this.limit,
           sort: { _id: -1 }
         };
-        const articles = await axios.post('/bg/blog/articles/query', { seletor, options });
+        if (this.article.title) selector.title = this.article.title;
+        if (this.article.content) selector.content= this.article.content;
+        const articles = await axios.post('/bg/blog/articles/query', { selector, options });
         this.articles = articles.data.list.map(article => {
           article.isTopDesc = article.isTop ? '是' : '否';  
           article.createTime = moment(article.createTime).format('YYYY-MM-DD');
