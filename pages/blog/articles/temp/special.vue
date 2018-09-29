@@ -2,7 +2,7 @@
   <div class="l-article-special-wrapper" :article="articles">
     <l-title :title="title"></l-title>
     <div class="l-article-special">
-      <ul v-if="articles.length">
+      <ul v-if="articles && articles.length">
         <li class="l-article-special-item" v-for="(article, index) in articles" :key="index">
           <div class="l-article-special-main">
             <router-link  class="l-article-special-item" :to="`/blog/articles/detail?acticleId=${article._id}`" @click="detail(article)" :article="article">

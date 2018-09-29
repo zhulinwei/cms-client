@@ -123,7 +123,8 @@
           this.$notify.error('发布失败');  
         }
       },
-      finish() {
+      async finish() {
+        await this.save();
         this.form.articleId = '';
         this.form.isTop = false;
         this.form.title = '';

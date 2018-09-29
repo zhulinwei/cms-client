@@ -2,7 +2,7 @@
   <div class="l-article-common-wrapper">
     <l-title :title="title"></l-title>
     <div class="l-article-common">
-      <ul v-if="articles.length">
+      <ul v-if="articles && articles.length">
         <li v-for="(article, index) in articles" :key="index" class="l-article-common-item"  @click="detail(article)">
           <router-link :to="`/blog/articles/detail?acticleId=${article._id}`"  @click="detail(article)" :article="article">
             <div class="l-article-common-img-wrapper">

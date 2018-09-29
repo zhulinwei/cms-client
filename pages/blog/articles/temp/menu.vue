@@ -1,5 +1,5 @@
 <template>
-  <div class="l-menu-wrapper" v-show="catalogs.length > 0">
+  <div class="l-menu-wrapper" v-show="catalogs && catalogs.length > 0">
     <ul class="l-menu l-menu-hidden">
       <li class="l-menu-title">文章类别</li>
       <li class="l-menu-item" v-for="catalog in catalogs" :key="catalog._id" @click="changeCatalog(catalog)">
