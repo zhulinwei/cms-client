@@ -8,6 +8,11 @@
     </el-col>
     <el-col>
       <el-form :inline="true" :model="article" label-width="80px">
+        <el-form-item label="文章目录">
+          <el-select v-model="article.catalogId" placeholder="请选择" size="small" @change="query">
+            <el-option v-for="catalog in catalogs" :key="catalog._id" :label="catalog.name" :value="catalog._id"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="文章题目">
           <el-input size="small" v-model="article.title" width="100px"></el-input>
         </el-form-item>
@@ -30,9 +35,9 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="缩略图" width="120">
+      <el-table-column label="缩略图" width="150">
         <template slot-scope="scope">
-          <img :src="scope.row.thumbnail" width="100px" height="100px">
+          <img :src="scope.row.thumbnail" width="120px" height="100px">
         </template>
       </el-table-column>
       <el-table-column property="title" label="标题"></el-table-column>
@@ -62,9 +67,11 @@
       let article = {
         title: '',
         content: '', 
+        catalogId: '',
       };
+      let catalogs = [];
       let articles = [];
-      return { count, page, limit, article, articles };
+      return { count, page, limit, catalogs, article, articles };
     },
     created() {
       this.query();  
@@ -80,7 +87,10 @@
         };
         if (this.article.title) selector.title = this.article.title;
         if (this.article.content) selector.content= this.article.content;
+        if (this.article.catalogId) selector.catalogId = this.article.catalogId;
         const articles = await axios.post('/bg/blog/articles/query', { selector, options });
+        const catalogs = await axios.get('/bg/blog/catalogs');
+        this.catalogs = catalogs.data.list;
         this.articles = articles.data.list.map(article => {
           article.isTopDesc = article.isTop ? '是' : '否';  
           article.createTime = moment(article.createTime).format('YYYY-MM-DD');
