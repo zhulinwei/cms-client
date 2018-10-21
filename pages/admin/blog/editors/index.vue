@@ -29,6 +29,9 @@
       <el-form-item label="文章概要">
         <el-input v-model="form.outline"></el-input>
       </el-form-item>
+      <el-form-item label="阅读人数">
+        <el-input v-model="form.readCount"></el-input>
+      </el-form-item>
       <el-form-item label="文章详情">
         <l-text-editor :content="content" v-on:finish="editorFinish"></l-text-editor>
       </el-form-item>
@@ -61,6 +64,7 @@
         thumbnail: '',
         catalogId: '',
         isTop: false,
+        readCount: 0,
       };
       let content = '';
       let thumbnail = '';
@@ -91,6 +95,7 @@
             this.form.content = article.data.content;
             this.form.thumbnail = article.data.thumbnail;
             this.form.catalogId = article.data.catalogId;
+            this.form.readCount = article.data.readCount;
             this.content = article.data.content;
             this.thumbnail = article.data.thumbnail;
           }

@@ -1,5 +1,21 @@
 const axios = require('axios');
 
+function isProduction() {
+  return process.env.NODE_ENV === 'production';
+}
+
+const localhostProxy = {
+  '/api/': { target: 'http://localhost:3451' },
+  '/bg/': { target: 'http://localhost:3451' },
+};
+
+const productionProxy = {
+  '/api/': { target: 'http://www.51linwei.top:3451' },
+  '/bg/': { target: 'http://www.51linwei.top:3451' },
+};
+
+const proxy = isProduction() ? productionProxy : localhostProxy;
+console.log(proxy);
 module.exports = {
   /*
   ** Headers of the page
@@ -35,11 +51,11 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  proxy: {
-    // '/api/': { target: 'http://localhost:3451', pathRewrite: { '^/api/': '' } },
-    '/api/': { target: 'http://localhost:3451' },
-    '/bg/': { target: 'http://localhost:3451' },
-  },
+  // proxy: {
+  //   '/api/': { target: 'http://localhost:3451', pathRewrite: { '^/api/': '' } },
+  //   '/api/': { target: 'http://localhost:3451' },
+  //   '/bg/': { target: 'http://localhost:3451' },
+  // },
   // generate:{
   //   routes: function () {
   //     const options = { fields: { _id: 1 } } 
@@ -51,6 +67,7 @@ module.exports = {
   //       })  
   //   }
   // }, 
+  proxy,
   build: {
     /*
     ** Run ESLint on save

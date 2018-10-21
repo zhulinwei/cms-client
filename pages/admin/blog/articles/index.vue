@@ -43,6 +43,7 @@
       <el-table-column property="title" label="标题"></el-table-column>
       <el-table-column property="author" label="作者" width="80"></el-table-column>
       <el-table-column property="isTopDesc" label="置顶" width="50"></el-table-column>
+      <el-table-column property="readCount" label="阅读" width="50"></el-table-column>
       <el-table-column property="createTime" label="发布时间" width="100"></el-table-column>
       <el-table-column label="编辑管理" width="150">
         <template slot-scope="scope">
@@ -80,7 +81,7 @@
       async query() {
         let selector = {};
         let options = {
-          fields: { title: 1, isTop: 1, thumbnail: 1, author: 1, createTime: 1 },
+          fields: { title: 1, isTop: 1, thumbnail: 1, author: 1, createTime: 1, readCount: 1, updateTime:1 },
           skip: (this.page - 1) * this.limit,
           limit: this.limit,
           sort: { _id: -1 }
@@ -94,6 +95,7 @@
         this.articles = articles.data.list.map(article => {
           article.isTopDesc = article.isTop ? '是' : '否';  
           article.createTime = moment(article.createTime).format('YYYY-MM-DD');
+          article.updateTime = moment(article.updateTime).format('YYYY-MM-DD');
           return article;
         });
         this.count = articles.data.count;
