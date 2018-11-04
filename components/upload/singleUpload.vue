@@ -25,7 +25,7 @@
         this.$emit('finish');
       },
       error() {
-        this.$notify.errof('上传失败');
+        this.$notify.error('上传失败');
       },
       beforeAvatarUpload(file) {
         // const isJPG = file.type === 'image/jpeg';
