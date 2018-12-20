@@ -34,12 +34,12 @@
         {
           "_id":"5a2d48c95738b97164dce2c4",
           "name": "Level.Z",
-          "avatar":"http://pahz6ot8c.bkt.clouddn.com/5b271e361f065f167e8fef8c",
+          "avatar":"http://image.51linwei.top/5b271e361f065f167e8fef8c",
           "desc": "超级管理员"
         },{
           "_id":"5a2d48c95738b97164dce2c4",
           "name": "test",
-          "avatar":"http://pahz6ot8c.bkt.clouddn.com/5b271e611f065f167e8fef91",
+          "avatar":"http://image.51linwei.top/5b271e611f065f167e8fef91",
           "desc": "游客"
         },
       ];

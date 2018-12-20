@@ -38,7 +38,7 @@
     data() {
       const admin = {
         "name": "Level.Z",
-        "image": "http://pahz6ot8c.bkt.clouddn.com/5b271e361f065f167e8fef8c"
+        "image": "http://image.51linwei.top/5b271e361f065f167e8fef8c"
       };
       const menus = [
         {
@@ -53,24 +53,24 @@
             {
               "name": "目录列表",
               "url": "/admin/blog/catalogs",
-              "icon": "fa-folder-open" 
+              "icon": "fa-folder-open"
             },
             {
               "name": "文章列表",
               "url": "/admin/blog/articles",
-              "icon": "fa-file",  
+              "icon": "fa-file",
             },
             {
               "name": "发布文章",
               "url": "/admin/blog/editors",
-              "icon": "fa-pencil-square-o",  
+              "icon": "fa-pencil-square-o",
             },
             {
               "name": "评论管理",
               "url": "/admin/blog/comments",
-              "icon": "fa-comments"  
+              "icon": "fa-comments"
             },
-          ] 
+          ]
         },
         // {
         //   "name": "微信管理",
@@ -79,9 +79,9 @@
         //     {
         //       "name": "目录列表",
         //       "url": "/admin/blog/catalogs",
-        //       "icon": "fa-folder-open" 
+        //       "icon": "fa-folder-open"
         //     },
-        //   ] 
+        //   ]
         // },
         {
           "name": "任务管理",
@@ -90,9 +90,9 @@
             {
               "name": "任务列表",
               "url": "/admin/task/list",
-              "icon": "fa-sort-amount-desc" 
+              "icon": "fa-sort-amount-desc"
             },
-          ] 
+          ]
         },
         {
           "name": "账号设置",
@@ -107,14 +107,14 @@
             {
               "name": "权限设置",
               "url": "/admin/settings",
-              "icon": "fa-id-card" 
+              "icon": "fa-id-card"
             },
-          ] 
+          ]
         }
       ];
       return {
         admin,
-        menus,  
+        menus,
       }
     },
     methods: {
@@ -143,11 +143,11 @@
     color: #fff;
     background-color: #4C3B2F;
     border-right: 0;
-    z-index: 100;    
+    z-index: 100;
   }
 
   #l-admin-side.hidden-xs-only-row {
-    width: 0px;  
+    width: 0px;
   }
 
   .l-admin-sidebar-header {
@@ -187,11 +187,11 @@
     height: 100%;
     color: #fff;
   }
-  
+
   .l-admin-sidebar-body .el-menu-item:hover {
     background-color: #37281E;
   }
-  
+
   .l-admin-sidebar-body .el-menu-item:hover span {
     color: #F1AC59;
   }
@@ -205,6 +205,6 @@
   .l-admin-sidebar-body .el-menu-item.is-active i {
     color: #fff;
     padding: 0 8px;
-    font-size: 16px; 
+    font-size: 16px;
   }
 </style>

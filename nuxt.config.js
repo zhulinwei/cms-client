@@ -51,22 +51,6 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  // proxy: {
-  //   '/api/': { target: 'http://localhost:3451', pathRewrite: { '^/api/': '' } },
-  //   '/api/': { target: 'http://localhost:3451' },
-  //   '/bg/': { target: 'http://localhost:3451' },
-  // },
-  // generate:{
-  //   routes: function () {
-  //     const options = { fields: { _id: 1 } } 
-  //     return axios.post('http://localhost:7800/api/blog/articles/query', { selector: {}, options })
-  //       .then(res => {
-  //         return res.data.list.map((v) => {
-  //           return '/blog/articles/' + v._id;
-  //         });
-  //       })  
-  //   }
-  // }, 
   proxy,
   build: {
     /*
