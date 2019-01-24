@@ -21,13 +21,13 @@ cms-client是基于vue+nuxt实现的单页Web应用（SPA），采用服务端�
 
 ### 博客系统
 目录列表
-![目录列表](http://image.51linwei.top/github/blog/catalog.png)
+![目录列表](http://image.51linwei.top/github/catalog.png)
 
 文章列表
-![文章列表](http://image.51linwei.top/github/blog/article.png)
+![文章列表](http://image.51linwei.top/github/article.png)
 
 文章发布
-![文章发布](http://image.51linwei.top/github/blog/editor.png)
+![文章发布](http://image.51linwei.top/github/editor.png)
 
 博客详情
 ![博客详情](http://image.51linwei.top/github/blog.png)
