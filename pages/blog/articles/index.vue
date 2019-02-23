@@ -38,19 +38,21 @@
     },
     methods: {
       async query() {
-        // 侧边栏
-        const catalogs = await axios.get('/api/blog/catalogs');       
-        // 置顶文章
-        const specialSelector = { isTop: true };
-        // 普通文件
-        const commonSelector = { isTop: false };
         const options = { limit: 20, sort: { _id: -1 }, fields: this.fields };
-        const specialarticles = await axios.post('/api/blog/articles/query', { selector: specialSelector, options });
-        const commonarticles = await axios.post('/api/blog/articles/query', { selector: commonSelector, options });
-        this.catalogs = catalogs.data.list.map(catalog => { return { id: catalog._id, name: catalog.name }});
-        this.specialarticles = specialarticles.data.list;
-        this.commonarticles = commonarticles.data.list;
-        this.residue = commonarticles.data.residue;
+        try {
+          const [ catalogs, specialArticles, commonArticles ] = await Promise.all([
+            axios.get('/api/blog/catalogs'),
+            axios.post('/api/blog/articles/query', { selector: { isTop: true }, options }),
+            axios.post('/api/blog/articles/query', { selector: { isTop: false }, options }),
+          ]);
+          this.catalogs = catalogs.data.list.map(catalog => { return { id: catalog._id, name: catalog.name }});
+          this.commonarticles = commonArticles.data.list;
+          this.specialarticles = specialArticles.data.list;
+          this.residue = commonArticles.data.residue;
+        } catch(err) {
+          console.log(err);
+          await this.query();
+        }
       },
       async changeCatalog(catalog) {
         this.loading = true;
