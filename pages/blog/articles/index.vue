@@ -39,20 +39,15 @@
     methods: {
       async query() {
         const options = { limit: 20, sort: { _id: -1 }, fields: this.fields };
-        try {
-          const [ catalogs, specialArticles, commonArticles ] = await Promise.all([
-            axios.get('/api/blog/catalogs'),
-            axios.post('/api/blog/articles/query', { selector: { isTop: true }, options }),
-            axios.post('/api/blog/articles/query', { selector: { isTop: false }, options }),
-          ]);
-          this.catalogs = catalogs.data.list.map(catalog => { return { id: catalog._id, name: catalog.name }});
-          this.commonarticles = commonArticles.data.list;
-          this.specialarticles = specialArticles.data.list;
-          this.residue = commonArticles.data.residue;
-        } catch(err) {
-          console.log(err);
-          await this.query();
-        }
+        const [ catalogs, specialArticles, commonArticles ] = await Promise.all([
+          axios.get('/api/blog/catalogs'),
+          axios.post('/api/blog/articles/query', { selector: { isTop: true }, options }),
+          axios.post('/api/blog/articles/query', { selector: { isTop: false }, options }),
+        ]);
+        this.catalogs = catalogs.data.list.map(catalog => { return { id: catalog._id, name: catalog.name }});
+        this.commonarticles = commonArticles.data.list;
+        this.specialarticles = specialArticles.data.list;
+        this.residue = commonArticles.data.residue;
       },
       async changeCatalog(catalog) {
         this.loading = true;
