@@ -19,7 +19,6 @@
             <h2>关于我</h2>
             <p>个人网址：www.51linwei.top</p>
             <p>github地址：https://github.com/zhulinwei</p>
-            <p>微信：1171567018</p>
             <p>微信订阅号：AnttyZhu</p>
           </div>
         </div>
@@ -29,7 +28,7 @@
       <div class="l-footer">
         <p class="hidden-xs-only">Copyright © <a href="javascript:;">2017-2018 Level.Z All Rights Reserved</a></p>
         <p class="hidden-xs-only"><a href="javascript:;">粤ICP备17044709号</a></p>
-        <p class="show-xs-only">©2016-2018 Level.Z 版权所有 | 粤ICP备17044709号</p>
+        <p class="show-xs-only">©2016-2019 Level.Z 版权所有 | 粤ICP备17044709号</p>
       </div>
     </div>
   </div>
