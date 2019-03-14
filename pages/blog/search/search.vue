@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import detail from "../articles/detail.vue"
+  import detail from "../article/detail.vue"
   export default {
     layout: 'blog',
     props: [ 'articles' ],
