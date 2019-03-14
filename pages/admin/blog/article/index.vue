@@ -28,7 +28,7 @@
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-form label-width="80px">
-            <el-form-item label="更新时间">
+            <el-form-item label="创建时间">
               <span v-if="scope.row.createTime">{{ scope.row.createTime }}</span>
               <el-tag v-else>-</el-tag>
             </el-form-item>
@@ -57,8 +57,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import moment from 'moment'
+  import axios from 'axios';
+  import moment from 'moment';
+
   export default {
     layout: 'admin',
     data() {
@@ -94,8 +95,8 @@
         this.catalogs = catalogs.data.list;
         this.articles = articles.data.list.map(article => {
           article.isTopDesc = article.isTop ? '是' : '否';  
-          article.createTime = moment(article.createTime).format('YYYY-MM-DD');
-          article.updateTime = moment(article.updateTime).format('YYYY-MM-DD');
+          article.createTime = moment(article.createTime).format('YYYY-MM-DD HH:mm:ss');
+          article.updateTime = moment(article.updateTime).format('YYYY-MM-DD HH:mm:ss');
           return article;
         });
         this.count = articles.data.count;
