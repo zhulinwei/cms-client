@@ -34,90 +34,26 @@
   </el-row>
 </template>
 <script>
+  import axios from 'axios';
+
   export default {
+    created() {
+      this.query(); 
+    },
+
     data() {
       const admin = {
         "name": "Level.Z",
         "image": "http://image.51linwei.top/5b271e361f065f167e8fef8c"
       };
-      const menus = [
-        {
-          "name": "控制面板",
-          "url": "/admin/dashboard",
-          "icon": "fa-desktop"
-        },
-        {
-          "name": "博客管理",
-          "icon": "fa-book",
-          "subMenus": [
-            {
-              "name": "目录列表",
-              "url": "/admin/blog/catalogs",
-              "icon": "fa-folder-open"
-            },
-            {
-              "name": "文章列表",
-              "url": "/admin/blog/articles",
-              "icon": "fa-file",
-            },
-            {
-              "name": "发布文章",
-              "url": "/admin/blog/editors",
-              "icon": "fa-pencil-square-o",
-            },
-            {
-              "name": "评论管理",
-              "url": "/admin/blog/comments",
-              "icon": "fa-comments"
-            },
-          ]
-        },
-        // {
-        //   "name": "微信管理",
-        //   "icon": "fa-weixin",
-        //   "subMenus": [
-        //     {
-        //       "name": "目录列表",
-        //       "url": "/admin/blog/catalogs",
-        //       "icon": "fa-folder-open"
-        //     },
-        //   ]
-        // },
-        {
-          "name": "任务管理",
-          "icon": "fa-tasks",
-          "subMenus": [
-            {
-              "name": "任务列表",
-              "url": "/admin/task/list",
-              "icon": "fa-sort-amount-desc"
-            },
-          ]
-        },
-        {
-          "name": "账号设置",
-          "url": "/admin/accounts",
-          "icon": "fa-cog"
-        },
-        {
-          "name": "系统设置",
-          "url": "",
-          "icon": "fa-cogs",
-           "subMenus": [
-            {
-              "name": "权限设置",
-              "url": "/admin/settings",
-              "icon": "fa-id-card"
-            },
-          ]
-        }
-      ];
-      return {
-        admin,
-        menus,
-      }
+      let menus = [];
+      return { admin, menus };
     },
     methods: {
+      async query() {
+        const menus = await axios.get('/bg/settings/menus/all');
+        this.menus = menus.data;
+      },
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
