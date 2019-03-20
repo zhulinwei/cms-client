@@ -74,7 +74,6 @@
         this.form.weight = catalog.weight;
       },
       async save() {
-        console.log(this.form);
         if (!this.form.name) return this.$notify.warning('无效的目录名称');
         try {
           if (this.form._id) await axios.put(`/bg/blog/catalogs/${this.form._id}`, this.form);

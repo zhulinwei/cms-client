@@ -39,8 +39,8 @@
 
       <el-table-column label="编辑管理" width="250">
         <template slot-scope="scope">
-          <el-button size="mini" type="success" @click="setting(scope.row)" v-if="isOneLevel(scope.row.type)">设置</el-button>
           <el-button size="mini" type="primary" @click="editor(scope.row)">编辑</el-button>
+          <el-button size="mini" type="success" @click="setting(scope.row)" v-if="isOneLevel(scope.row.type)">设置</el-button>
           <el-button size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -115,6 +115,10 @@
       add() {
         this.title = '新增目录';
         this.menuDialog = true;
+        this.form._id = '';
+        this.form.url = '';
+        this.form.icon = '';
+        this.form.name = '';
         if (this.oneLevelMenuId) this.form.parentId = this.oneLevelMenuId;
       },
       editor(menu) {

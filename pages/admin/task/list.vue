@@ -11,8 +11,8 @@
     </el-col>
     <el-table :border="true" :data="tasks" style="width: 100%">
       <el-table-column label="任务名称" property="name"></el-table-column>
-      <el-table-column label="开发人员" property="nominee"></el-table-column>
-      <el-table-column label="进度描述">
+      <el-table-column label="开发人员" property="nominee" width="150"></el-table-column>
+      <el-table-column label="进度描述" width="150">
         <template slot-scope="scope">
           <el-tag v-show="scope.row.status === StateType.INIT" type="info" size="small">待开发</el-tag>
           <el-tag v-show="scope.row.status === StateType.WORKING" type="primary" size="small">进行中</el-tag>

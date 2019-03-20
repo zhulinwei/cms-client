@@ -10,10 +10,10 @@
           <router-link to="/blog">主页</router-link>
         </div>
         <div class="l-header-tab-item">
-          <router-link to="/blog/articles">博客</router-link>
+          <router-link to="/blog/article">博客</router-link>
         </div>
         <div class="l-header-tab-item">
-          <router-link to="/blog/searches">搜索</router-link>
+          <router-link to="/blog/search">搜索</router-link>
         </div>
         <div class="l-header-tab-item">
           <a href="https://github.com/zhulinwei">联系我</a>
