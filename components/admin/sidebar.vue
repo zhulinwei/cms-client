@@ -79,7 +79,7 @@
     color: #fff;
     background-color: #4C3B2F;
     border-right: 0;
-    z-index: 100;
+    z-index: 3000;
   }
 
   #l-admin-side.hidden-xs-only-row {

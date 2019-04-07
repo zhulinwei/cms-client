@@ -46,3 +46,6 @@ npm start
 2.docker 启动
 docker build -t cms-client;docker run -d --name cms-client cms-client
 
+## 其他
+
+### 图标：https://fontawesome.com/icons
