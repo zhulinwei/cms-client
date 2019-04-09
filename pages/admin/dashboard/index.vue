@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>控制面板</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-col class='l-admin-bashboard-title'>博客统计</el-col>
+    <el-col class='l-admin-bashboard-title'>博客统计<a href="/bg/backups/cms/download" style="color: #fff;cursor: auto">备份</a></el-col>
     <el-col :span="6" v-for="(item, index) in basics" :key="index" >
       <el-card>
         <p><span>{{ item.name }}</span>:<span>{{ item.count }}</span></p>
@@ -15,7 +15,6 @@
         <div id="echart" ref="test" style="width: 500px;height: 200px;"></div>  
       </el-card>
     </el-col>
-    
     <el-col :span="12">
       <el-card>
         <el-table :border="true" :data="tasks" style="width: 100%;font-size: 12px">
@@ -35,8 +34,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import echarts from 'echarts'
+  import axios from 'axios';
+  import echarts from 'echarts';
 
   const StateType = {
     INIT: 0,
@@ -64,7 +63,6 @@
       legend: {
         orient: 'vertical',
         left: 'left',
-        // data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
         data: legendData
       },
       series : [{
@@ -116,7 +114,7 @@
       },
       initEchart() {
         this.chart = echarts.init(this.$refs.test); 
-      } 
+      },
     },
     mounted() {
       console.log('in')
