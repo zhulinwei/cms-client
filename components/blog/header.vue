@@ -18,11 +18,11 @@
         <div class="l-header-tab-item">
           <a href="https://github.com/zhulinwei">联系我</a>
         </div>
-
+        <!--
         <div class="l-header-tab-item">
           <router-link to="/admin/login">后台管理</router-link>
         </div>
-
+        -->
       </div>
     </div>
   </div>

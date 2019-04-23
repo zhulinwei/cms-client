@@ -15,7 +15,7 @@ const productionProxy = {
 };
 
 const proxy = isProduction() ? productionProxy : localhostProxy;
-console.log(proxy);
+
 module.exports = {
   /*
   ** Headers of the page

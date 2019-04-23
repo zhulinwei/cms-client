@@ -117,7 +117,6 @@
       },
     },
     mounted() {
-      console.log('in')
       this.initEchart();
     },
 
