@@ -14,8 +14,7 @@ cms-client是基于vue+nuxt实现的单页Web应用（SPA），采用服务端�
 
 ### 用户系统
 
-![用户系统1]()
-![用户系统2](http://image.51linwei.top/github/setting.png)
+![用户系统2](./static/images/account.png)
 
 ### 统计系统
 ![统计系统](./static/images/dashboard.png)
