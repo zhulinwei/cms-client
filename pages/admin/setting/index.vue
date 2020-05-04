@@ -29,6 +29,7 @@
 <script>
   export default {
     layout: 'admin',
+    middleware: 'auth',
     data() {
       const tableData = [
         {

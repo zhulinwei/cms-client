@@ -62,6 +62,7 @@
 
   export default {
     layout: 'admin',
+        middleware: 'auth',
     data() {
       let count = 0;
       let page = 1;

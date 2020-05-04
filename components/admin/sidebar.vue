@@ -11,7 +11,7 @@
         <el-menu-item v-if="!menu.subMenus || menu.subMenus.length <1" :index="getMenuIndex(menuIndex)">
           <nuxt-link :to= "menu.url">
             <i class="fa" :class="menu.icon" aria-hidden="true"></i>
-            <span slot="title">{{ menu.name }}</span>
+            <span>{{ menu.name }}</span>
           </nuxt-link>
         </el-menu-item>
         <!-- 二级菜单 -->
@@ -24,7 +24,7 @@
             <el-menu-item :index="getMenuIndex(menuIndex, subMenuIndex)">
               <nuxt-link :to= "subMenu.url">
                 <i class="fa" :class="subMenu.icon" aria-hidden="true"></i>
-                <span slot="title">{{ subMenu.name }}</span>
+                <span>{{ subMenu.name }}</span>
               </nuxt-link>
             </el-menu-item>
           </div>
@@ -55,10 +55,8 @@
         this.menus = menus.data;
       },
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
       },
       getMenuIndex(menuIndex, subMenuIndex) {
         if (!subMenuIndex) return `${menuIndex}`;
@@ -90,7 +88,7 @@
     color: #fff;
     height: 140px;
     vertical-align: middle;
-    background-color: #4C3B2;
+    /* background-color: #4C3B2; */
     margin-bottom: 10px;
   }
 

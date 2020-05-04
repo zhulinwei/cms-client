@@ -43,6 +43,7 @@
 
   export default {
     layout: 'admin',
+    middleware: 'auth',
     created() {
       this.query(); 
     },

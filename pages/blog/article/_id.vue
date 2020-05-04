@@ -33,13 +33,11 @@
       return { user, article, comments, articleId, commentCount };
     },
     created() {
-      /// this.articleId = this.$route.query.acticleId || '';
       this.articleId = this.$route.params.id || '';
       this.query();
     },
     methods: {
        async query() {
-        console.log(this.articleId)
         if (!this.articleId) return this.$notify.error('文章编号不存在');
         if (this.articleId.length != 24) return this.$notify.error('无效的文章编号');
         const [ user, article, comments ] = await Promise.all([

@@ -19,68 +19,67 @@
           <i class="l-admin-menu-dot">.</i>
         </el-menu-item>
         -->
-        <el-menu-item index="2">
-          <span class="hidden-xs-only">退出</span>
-          <i class="fa fa-sign-out" aria-hidden="true"></i>
-        </el-menu-item>
-      </el-menu>
-    </el-row>
-  </template>
-  <script>
-    export default {
-      data() {
-        return {
-          gridData: [] 
-        };
-      },
-      methods: {
-        handleSelect(key, keyPath) {
-          console.log(key, keyPath);
-        }
+      <el-menu-item index="2">
+        <span class="hidden-xs-only">退出</span>
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+      </el-menu-item>
+    </el-menu>
+  </el-row>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        gridData: [] 
+      };
+    },
+    methods: {
+      handleSelect(key, keyPath) {
       }
     }
-  </script>
+  }
+</script>
 
-  <style>
-    #l-admin-header .l-admin-menu {
-      position: absolute;
-      right: 0px;  
-    }
+<style>
+  #l-admin-header .l-admin-menu {
+    position: absolute;
+    right: 0px;  
+  }
 
-    #l-admin-header .l-admin-menu .el-menu-item {
-      padding: 0 5px;  
-    }
+  #l-admin-header .l-admin-menu .el-menu-item {
+    padding: 0 5px;  
+  }
 
-    #l-admin-header .l-admin-menu .el-menu-item:last-child {
-      margin-right: 0px;
-    }
+  #l-admin-header .l-admin-menu .el-menu-item:last-child {
+    margin-right: 0px;
+  }
 
-    #l-admin-header .l-admin-menu .el-menu-item i:not(.l-admin-menu-dot) {
-      color: #999;
-      position: relative;
-      padding-left: 2px;
-      border-bottom: 0px;
-    }
-    
-    #l-admin-header .l-admin-menu .el-menu-item.is-active {
-      border-bottom: 0px; 
-    }
+  #l-admin-header .l-admin-menu .el-menu-item i:not(.l-admin-menu-dot) {
+    color: #999;
+    position: relative;
+    padding-left: 2px;
+    border-bottom: 0px;
+  }
+  
+  #l-admin-header .l-admin-menu .el-menu-item.is-active {
+    border-bottom: 0px; 
+  }
 
-    #l-admin-header .l-admin-menu .l-admin-menu-dot {
-      position: fixed;
-      top: -12px;
-      left: -50px;
-      font-size: 28px;
-      color: red;  
-    }
+  #l-admin-header .l-admin-menu .l-admin-menu-dot {
+    position: fixed;
+    top: -12px;
+    left: -50px;
+    font-size: 28px;
+    color: red;  
+  }
 
-    #l-admin-header .el-menu--horizontal {
-      border-bottom: 0px;
-    }
+  #l-admin-header .el-menu--horizontal {
+    border-bottom: 0px;
+  }
 
-    #l-admin-header .fa-bell {
-      positive: relative;
-      top: -2px;   
-    }
+  #l-admin-header .fa-bell {
+    positive: relative;
+    top: -2px;   
+  }
 
-  </style>
+</style>

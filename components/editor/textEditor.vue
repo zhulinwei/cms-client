@@ -20,6 +20,7 @@
     },
     methods: {
       initEditor() {
+        const that = this;
         const Editor = this.$textEditor;
         let editor = new Editor('#editor');
         editor.customConfig.onchangeTimeout = 500;

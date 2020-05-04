@@ -29,7 +29,7 @@
         </div>
         <div class="l-comment-item">
           <div class="l-comment-editor">
-            <p><span>我要评论</span><span class="l-login"><a :href="loginUrl" v-show="user && user.role === userRoleType.TOURIST">登录</a></span></p>
+            <p><span>我要评论</span><span class="l-login"><a :href="authorizeUrl" v-show="user && user.role === userRoleType.TOURIST">登录</a></span></p>
             <textarea v-model="form.content" type="text" :placeholder="placeholder" class="comment-input" ref="comment-input"/> 
           </div>
           <div class="l-comment-footer">
@@ -49,12 +49,11 @@
     USER: 'user',
     TOURIST: 'tourist'
   };
-
-  const host = 'http://www.51linwei.top';
   export default {
     props: [ 'user', 'comments'], 
-    created() {
-      this.buildLoginUrl();
+    mounted() {
+      this.host = /localhost/.test(window.location.origin) ? 'http://localhost:3000' : 'http://www.51linwei.top:3000';
+      this.buildAuthorizeUrl();
     },
     data() {
       const articleId = this.$route.params.id; 
@@ -67,8 +66,9 @@
         content: '',
         to: {}
       };
-      let loginUrl = '';
-      return { title, articleId, form, placeholder, loginUrl, userRoleType };
+      let host = '';
+      let authorizeUrl = '';
+      return { title, articleId, form, placeholder, host, authorizeUrl, userRoleType };
     },
     methods: {
       reply(comment) {
@@ -89,16 +89,14 @@
           this.$notify.success('评论成功');
           this.$emit('comment-success')
           this.form.content = '';
-        } catch (err) {
-          console.log(err);
+        } catch (error) {
+          console.log(error);
           this.$notify.error('评论失败');
         }
       },
-      buildLoginUrl() {
-        const referer = encodeURIComponent(`${host}${this.$route.fullPath}`);
-        const redirectUrl = encodeURIComponent(`${host}/api/auth/qq/login?referer=${referer}`); 
-        const url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101405670&redirect_uri=${redirectUrl}&scope=get_user_info`;
-        this.loginUrl = url;
+      async buildAuthorizeUrl() {
+        const referer = encodeURIComponent(`${this.host}${this.$route.fullPath}`);
+        this.authorizeUrl = `${this.host}/api/auth/qq/login?state=${referer}`;
       }
     },
     components: {

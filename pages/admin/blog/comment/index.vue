@@ -46,6 +46,7 @@
   import moment from 'moment'
   export default {
     layout: 'admin',
+    middleware: 'auth',
     created() {
       this.query();  
     },
@@ -71,10 +72,8 @@
           return comment;  
         });
         this.count = comments.data.count;
-        console.log(comments.data)
       },
       handleEdit(index, row) {
-        console.log(index, row);
       },
       async remove(comment) {
         try {

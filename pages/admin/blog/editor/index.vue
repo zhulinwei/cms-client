@@ -51,6 +51,7 @@
 
   export default {
     layout: 'admin',
+    middleware: 'auth',
     data() {
       let catalogs = [];
       let articleId = '';

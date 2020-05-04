@@ -64,6 +64,7 @@
 
   export default {
     layout: 'admin',
+    middleware: 'auth',
     data() {
       let count = 0;
       let page = 1;
@@ -96,7 +97,6 @@
           sort: { status: 1, _id: -1 }
         };
         const tasks = await axios.post('/bg/tasks/query', { seletor, options });
-        console.log(tasks);
         this.tasks = tasks.data.list;
         this.count = tasks.data.count;
       },
@@ -105,7 +105,6 @@
         this.taskDialog = true;
       },
       editor(task) {
-        console.log(task)
         this.title = '编辑任务';
         this.form._id = task._id;
         this.form.name = task.name; 

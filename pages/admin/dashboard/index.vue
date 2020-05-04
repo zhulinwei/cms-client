@@ -84,6 +84,7 @@
 
   export default {
     layout: 'admin',
+    middleware: 'auth',
     data() {
       // 博客文章总量、当月新增数量、当月阅读次数、当月评论数量
       let chart = {};

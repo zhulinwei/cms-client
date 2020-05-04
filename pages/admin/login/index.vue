@@ -8,24 +8,13 @@
         <form method="POST" action="/login" >
           <div class="form-input">
             <i class="fa fa-user-circle-o fa-4"></i>
-            <input type="text" placeholder="这里输入登录名">
-          </div>
-          <!--错误提示-->
-          <div class="tip admin-error hidden">
-            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            <span>账号不存在</span>
+            <input type="text" placeholder="这里输入登录名" v-model="name" style="width: 80%"/>
           </div>
           <div class="form-input">
             <i class="fa fa-pencil-square fa-5"></i>
-            <input type="password" placeholder="这里输入密码">
+            <input type="password" placeholder="这里输入密码" v-model="password"  style="width: 80%"/>
           </div>
-          <!--错误提示-->                    
-          <div class="tip password-error hidden">
-            <!-- <i class="fa fa-pencil-square"></i>-->
-            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            <span>密码不正确</span>
-          </div>
-          <input type="button" class="btn btn-confirm" value="确定">
+          <input type="button" class="btn btn-confirm" value="确定" @click="login"/>
         </form>
       </div>
     </div>
@@ -33,10 +22,30 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     data() {
-      return {};
-    }    
+      let name = '';
+      let password = '';
+      return { name, password };
+    },
+    methods: {
+      async login () {
+        if (!this.name) return this.$notify.warning('请输入用户昵称');
+        if (!this.password) return this.$notify.warning('请输入用户密码');
+        try {
+          const user = await axios.post('/bg/admin/login', { name: this.name, password: this.password });
+          console.log(user)
+          this.$notify.success('登录成功');
+          this.$store.dispatch('login', user.data)
+          this.$router.push({ path: '/admin/dashboard' });
+        } catch (error) {
+          const message = error && error.response && error.response.data && error.response.data.message;
+          if (message) this.$notify.error(message);
+          else this.$notify.error('登录失败');
+        }
+      }
+    }
   }
 </script>
 

@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 function isProduction() {
   return process.env.NODE_ENV === 'production';
 }
@@ -17,9 +15,7 @@ const productionProxy = {
 const proxy = isProduction() ? productionProxy : localhostProxy;
 
 module.exports = {
-  /*
-  ** Headers of the page
-  */
+  mode: 'universal',
   head: {
     title: 'Level.Z',
     meta: [

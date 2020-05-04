@@ -1,6 +1,6 @@
 <template>
   <el-row id="l-single-upload">
-    <el-upload class="avatar-uploader" action="https://upload.qiniu.com/" :data="token" 
+    <el-upload class="avatar-uploader" action="http://upload.qiniu.com/" :data="token" 
       :show-file-list="false" :on-success="success" :on-error="error" :before-upload="beforeAvatarUpload">
       <img v-if="img" :src="img" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
